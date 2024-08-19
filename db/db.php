@@ -20,10 +20,12 @@ if ($result->num_rows > 0) {
             <p> Name: {$row['last_name']}, {$row['first_name']}</P>
             <p> Role: {$row['role']}</P>
             <p> }; </P>
+            <p>____________________________________________________</P>
         ";
         // print_r($row['usn']);
         // print_r($row['user_id']);
         // print_r("\n");
+
 
     }
 } else {
