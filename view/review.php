@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<!-- <form method="post">
+<form method="post">
     <input type="hidden" name="document_id" value="<?php echo $_GET['id']; ?>">
     Status: 
     <select name="status">
@@ -26,4 +26,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <option value="Needs Revision">Needs Revision</option>
     </select>
     <button type="submit">Submit</button>
-</form> -->
+</form>
