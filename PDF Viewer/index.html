@@ -1,109 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PDF Viewer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="pdf_viewer">
-        <div id="canvas_container">
-            <canvas id="pdf_renderer"></canvas>
-        </div>
-        <div id="navigation_controls">
-              <button id="go_previous">Previous</button>
-              <input type="number" value="1" id="current_page">
-              <button id="go_next">Next</button>
-        </div>
-        <div id="zoom_controls">
-            <button id="zoom_in">+</button>
-            <button id="zoom_out">-</button>
-        </div>
+      <div id="canvas_container">
+        <canvas id="pdf_renderer"></canvas>
+      </div>
+      <div id="navigation_controls">
+        <button id="go_previous">Previous</button>
+        <input type="number" value="1" id="current_page" />
+        <button id="go_next">Next</button>
+      </div>
+      <div id="zoom_controls">
+        <button id="zoom_in">+</button>
+        <button id="zoom_out">-</button>
+      </div>
     </div>
     <script>
-        var myState = {
-            pdf: null,
-            currentPage: 1,
-            zoom: 1
-        }
+      var myState = {
+        pdf: null,
+        currentPage: 1,
+        zoom: 1,
+      };
 
-        pdfjsLib.getDocument('sample.pdf').promise.then(pdf => {
-            myState.pdf = pdf;
-            render();
+      pdfjsLib.getDocument("sample.pdf").promise.then((pdf) => {
+        myState.pdf = pdf;
+        render();
+      });
+
+      function render() {
+        myState.pdf.getPage(myState.currentPage).then((page) => {
+          var canvas = document.getElementById("pdf_renderer");
+          var ctx = canvas.getContext("2d");
+          var viewport = page.getViewport({ scale: myState.zoom });
+
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          page.render({
+            canvasContext: ctx,
+            viewport: viewport,
+          });
         });
+      }
 
-        function render() {
-            myState.pdf.getPage(myState.currentPage).then(page => {
-                var canvas = document.getElementById("pdf_renderer");
-                var ctx = canvas.getContext("2d");
-                var viewport = page.getViewport({ scale: myState.zoom });
+      document.getElementById("go_previous").addEventListener("click", (e) => {
+        if (myState.pdf == null || myState.currentPage === 1) return;
+        myState.currentPage -= 1;
 
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
+        document.getElementById("current_page").value = myState.currentPage;
+        render();
+      });
 
-                page.render({
-                    canvasContext: ctx,
-                    viewport: viewport
-                });
-            });
-        }
+      document.getElementById("go_next").addEventListener("click", (e) => {
+        if (myState.pdf == null || myState.currentPage >= myState.pdf.numPages)
+          return;
+        myState.currentPage += 1;
 
-        document.getElementById("go_previous")
-        .addEventListener('click', (e) => {
-            if (myState.pdf == null || myState.currentPage === 1) return;
-            myState.currentPage -= 1;
+        document.getElementById("current_page").value = myState.currentPage;
+        render();
+      });
 
-            document.getElementById("current_page").value = myState.currentPage;
-            render();
-        });
+      document
+        .getElementById("current_page")
+        .addEventListener("keypress", (e) => {
+          if (myState.pdf == null) return;
 
-        document.getElementById("go_next")
-        .addEventListener('click', (e) => {
-            if (myState.pdf == null || myState.currentPage >= myState.pdf.numPages) return;
-            myState.currentPage += 1;
+          var code = e.keyCode ? e.keyCode : e.which;
+          if (code === 13) {
+            var desiredPage =
+              document.getElementById("current_page").valueAsNumber;
 
-            document.getElementById("current_page").value = myState.currentPage;
-            render();
-        });
+            if (desiredPage >= 1 && desiredPage <= myState.pdf.numPages) {
+              myState.currentPage = desiredPage;
 
-        document.getElementById("current_page")
-        .addEventListener('keypress', (e) => {
-            if (myState.pdf == null) return;
-
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if (code === 13) {
-                var desiredPage = document.getElementById("current_page").valueAsNumber;
-
-                if (desiredPage >= 1 && desiredPage <= myState.pdf.numPages) {
-                    myState.currentPage = desiredPage;
-
-                    document.getElementById("current_page").value = desiredPage;
-                    render();
-                }
+              document.getElementById("current_page").value = desiredPage;
+              render();
             }
+          }
         });
 
-        document.getElementById("zoom_in")
-        .addEventListener('click', (e) => {
-            if (myState.pdf == null) return;
-            if (myState.zoom >= 3) return;
-            myState.zoom += 0.5;
+      document.getElementById("zoom_in").addEventListener("click", (e) => {
+        if (myState.pdf == null) return;
+        if (myState.zoom >= 3) return;
+        myState.zoom += 0.5;
 
-            render();
-        });
+        render();
+      });
 
-        document.getElementById("zoom_out")
-        .addEventListener('click', (e) => {
-            if (myState.pdf == null) return;
-            if (myState.zoom <= 0.5) return;
-            myState.zoom -= 0.5;
+      document.getElementById("zoom_out").addEventListener("click", (e) => {
+        if (myState.pdf == null) return;
+        if (myState.zoom <= 0.5) return;
+        myState.zoom -= 0.5;
 
-            render();
-        });
-
+        render();
+      });
     </script>
-
-</body>
+  </body>
 </html>
