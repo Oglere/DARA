@@ -3,6 +3,8 @@
 html {
   display: flex;
   justify-content: center;
+  padding: 0;
+  margin: 0;
 
   body {
     max-width: 100%;
@@ -13,54 +15,6 @@ html {
     padding: 0;
     margin: 0;
     justify-content: center;
-    overflow: hidden;
-
-    .hamburgermodal {
-      display: flex;
-      height: 100%;
-      width: 200px;
-      padding: 20px;
-      background-color: #ffffff;
-      position: absolute;
-      left: -400px;
-      opacity: 0;
-      top: 0;
-      transition: all 0.5s ease-out;
-      box-shadow: 5px 5px 18px #9d9d9d, -5px -5px 18px #ffffff;
-
-      a {
-        text-decoration: none;
-        width: 100%;
-        height: 40px;
-      }
-
-      .loginbutton {
-        display: flex;
-        align-items: center;
-        height: 100%;
-
-        svg {
-          color: #1e1e1e;
-        }
-
-        h4 {
-          color: #1e1e1e;
-        }
-      }
-
-      .loginbutton:hover {
-        background-color: rgb(224, 224, 224);
-      }
-    }
-
-    .hamburgermodal.active {
-      left: 0;
-      opacity: 1;
-    }
-
-    .filter.active {
-      opacity: 1;
-    }
 
     main {
       max-width: 100%;
@@ -75,6 +29,24 @@ html {
         padding: 10px;
         display: flex;
         border-bottom: 1px #1e1e1e solid;
+        flex-direction: row-reverse;
+
+        .loginbutton {
+          display: flex;
+          align-items: center;
+        }
+
+        a {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          color: #1e1e1e;
+        }
+
+        a:hover {
+          text-decoration: none;
+          color: #3b3b3b;
+        }
 
         .hamburger {
           color: #8e0404;
@@ -98,7 +70,7 @@ html {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
 
         p {
           color: #04128e !important;
@@ -143,6 +115,28 @@ html {
 
           input[type="text"]:focus {
             outline: none;
+          }
+        }
+
+        .tags {
+          width: 702px;
+          height: 360px;
+          padding: 20px;
+          padding-top: 0;
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          background-color: rgba(255, 0, 0, 0.247);
+
+          .tag {
+            display: flex;
+            align-items: center;
+          }
+
+          .tagform {
+            height: 100%;
+            width: 100%;
+            background-color: rgba(255, 0, 0, 0.493);
           }
         }
       }
