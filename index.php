@@ -9,7 +9,7 @@
     <body>
         <main>
             <header>
-                <a href="#">
+                <a href="view/login.php">
                     <div class="loginbutton">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +76,7 @@
                             />
                             <line x1="7" y1="7" x2="7.01" y2="7" />
                         </svg>
+                        &nbsp;Tags
                     </div>
                     <div class="tagform">
                         <div class="lefttag">
