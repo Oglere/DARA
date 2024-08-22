@@ -76,9 +76,43 @@
                             />
                             <line x1="7" y1="7" x2="7.01" y2="7" />
                         </svg>
-                        &nbsp;Catalogs
                     </div>
-                <div class="tagform">asd</div>
+                    <div class="tagform">
+                        <div class="lefttag">
+
+                            <div class="date">
+                                <input type="number" id="from-year" name="from-year" min="1900" max="2100" step="1" value="2021" required>
+                                <label for="to-year">-</label>
+                                <input type="number" id="to-year" name="to-year" min="1900" max="2100" step="1" value="2022" required>
+                            </div>
+
+                            <div class="checkboxes">
+                                <div class="chkbx">
+                                    <input class="w3-check" type="checkbox" checked="checked">
+                                    <label>Case Study</label>
+                                </div>
+                                <div class="chkbx">
+                                    <input class="w3-check" type="checkbox">
+                                    <label>Thesis</label>
+                                </div>
+                                <div class="chkbx">
+                                    <input class="w3-check" type="checkbox">
+                                    <label>Proposal</label>
+                                </div>
+                                <div class="chkbx">
+                                    <input class="w3-check" type="checkbox">
+                                    <label>Capstone</label>
+                                </div>
+                                <div class="chkbx">
+                                    <input class="w3-check" type="checkbox">
+                                    <label>System Studies</label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="midtag"></div>
+                        <div class="righttag"></div>
+                    </div>
                 </div>
             </div>
 

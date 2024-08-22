@@ -87,6 +87,8 @@ html {
         }
 
         .search {
+          max-width: 100%;
+          width: 742px;
           display: flex;
           height: 35px;
 
@@ -110,7 +112,7 @@ html {
             border-bottom-left-radius: 5px;
             border: 1px solid #8e0404;
             height: calc(100% - 4px);
-            width: 700px;
+            width: 100%;
           }
 
           input[type="text"]:focus {
@@ -119,6 +121,7 @@ html {
         }
 
         .tags {
+          max-width: 100%;
           width: 702px;
           height: 360px;
           padding: 20px;
@@ -126,7 +129,6 @@ html {
           margin-top: 20px;
           display: flex;
           flex-direction: column;
-          background-color: rgba(255, 0, 0, 0.247);
 
           .tag {
             display: flex;
@@ -136,7 +138,42 @@ html {
           .tagform {
             height: 100%;
             width: 100%;
-            background-color: rgba(255, 0, 0, 0.493);
+            display: flex;
+            flex-direction: row;
+
+            .lefttag {
+              width: 100%;
+              height: calc(100% - 40px);
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+
+              .date {
+                margin-bottom: 20px;
+              }
+
+              .checkboxes {
+                height: 80%;
+                display: flex;
+                flex-direction: column;
+
+                .chkbx {
+                  margin-bottom: 10px;
+                }
+              }
+            }
+
+            .midtag {
+              width: 100%;
+              height: calc(100% - 40px);
+              padding: 20px;
+            }
+
+            .righttag {
+              width: 100%;
+              height: calc(100% - 40px);
+              padding: 20px;
+            }
           }
         }
       }
