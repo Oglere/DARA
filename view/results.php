@@ -1,8 +1,13 @@
+<?php 
+    include "../controls/search material/results_and_control.php"
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/results.scss">
     <link rel="stylesheet" href="../css/mainpage.scss">
     <title>DARA Main Page</title>
 </head>
@@ -30,11 +35,34 @@
                     <h4> &nbsp Login</h4>
                 </div>
             </a>
+            <div class="ahh">
+                <p>D A R A</p>
+                <?php 
+                    include "../controls/search material/search_bar.php";
+                ?>
+            </div>
         </header>
+
+        <div class="blabla">
+            <div class="kilid">
+                <div class="tagform">
+                    <div class="lefttag">
+                        
+                    </div>
+                    <div class="midtag"></div>
+                    <div class="righttag"></div>
+                </div>
+            </div>
+
+            <div class="cell_container">
+                <?php 
+                    include "../controls/search material/results_control.php"
+                ?>
+            </div>
+        </div>
+
         
-        <?php 
-            include "../controls/main.php"
-        ?>
+        
 
         <footer>
             <a href="#">About DARA</a>
@@ -44,4 +72,4 @@
     </main>
 </body>
 </html>
-<script src="js/index.js"></script>
+<script src="../js/results.js"></script>

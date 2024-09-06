@@ -9,6 +9,7 @@ html {
   body {
     max-width: 100%;
     width: 1400px;
+    height: 100%;
     position: absolute;
     font-family: "rubik";
     display: flex;
@@ -19,7 +20,7 @@ html {
     main {
       max-width: 100%;
       width: 1400px;
-      height: 1000px;
+      height: 100%;
       display: flex;
       flex-direction: column;
 
@@ -64,13 +65,13 @@ html {
       }
 
       .contents {
+        margin-top: 200px;
         width: calc(100% - 20px);
         height: 100%;
         padding: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-end;
 
         p {
           color: #04128e !important;
@@ -133,23 +134,22 @@ html {
           .tag {
             display: flex;
             align-items: center;
+            justify-content: center;
           }
 
           .tagform {
             height: 100%;
-            width: 100%;
             display: flex;
             flex-direction: row;
 
             .lefttag {
               width: 100%;
               height: calc(100% - 40px);
-              padding: 20px;
               display: flex;
               flex-direction: column;
 
               .date {
-                margin-bottom: 20px;
+                margin-left: 10px;
               }
 
               .checkboxes {
@@ -161,18 +161,6 @@ html {
                   margin-bottom: 10px;
                 }
               }
-            }
-
-            .midtag {
-              width: 100%;
-              height: calc(100% - 40px);
-              padding: 20px;
-            }
-
-            .righttag {
-              width: 100%;
-              height: calc(100% - 40px);
-              padding: 20px;
             }
           }
         }

@@ -1,29 +1,56 @@
 <?php
 include '../db/db.php';
+session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $document_id = $_POST['document_id'];
-    $status = $_POST['status'];
+if ($_SESSION['role'] !== 'Teacher') {
+    header('Location: login.php');
+    exit();
+}
 
-    $stmt = $conn->prepare("UPDATE Document_Repository SET status = ?, date_reviewed = NOW() WHERE document_id = ?");
-    $stmt->bind_param("si", $status, $document_id);
+if (isset($_GET['id'])) {
+    $document_id = $_GET['id'];
 
-    if ($stmt->execute()) {
-        echo "Document status updated!";
-    } else {
-        echo "Error: " . $stmt->error;
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $status = $_POST['status'];
+        $sql = "UPDATE Document_Repository SET status = ?, date_reviewed = NOW() WHERE document_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $status, $document_id);
+        $stmt->execute();
+        header('Location: teacher_dashboard.php');
     }
-    $stmt->close();
+
+    $sql = "SELECT * FROM Document_Repository WHERE document_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $document_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $document = $result->fetch_assoc();
+} else {
+    header('Location: teacher_dashboard.php');
 }
 ?>
 
-<form method="post">
-    <input type="hidden" name="document_id" value="<?php echo $_GET['id']; ?>">
-    Status: 
-    <select name="status">
-        <option value="Approved">Approve</option>
-        <option value="Rejected">Reject</option>
-        <option value="Needs Revision">Needs Revision</option>
-    </select>
-    <button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DARA - Review Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <h1>Review Document</h1>
+    <h2><?= $document['title'] ?></h2>
+    <p><strong>Authors:</strong> <?= implode(', ', json_decode($document['authors'], true)) ?></p>
+    <p><strong>Abstract:</strong> <?= json_decode($document['metadata'], true)['abstract'] ?></p>
+    <p><a href="<?= $document['file_path'] ?>" target="_blank">Download Document</a></p>
+    <form method="post">
+        <label>Status:</label>
+        <select name="status">
+            <option value="Approved">Approve</option>
+            <option value="Needs Revision">Request Revision</option>
+            <option value="Rejected">Reject</option>
+        </select><br>
+        <button type="submit">Submit Review</button>
+    </form>
+</body>
+</html>
