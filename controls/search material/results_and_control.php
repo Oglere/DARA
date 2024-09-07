@@ -1,11 +1,10 @@
 <?php
 include '../db/db.php';
 
-// Initialize variables for additional filters
 $fromYear = isset($_GET['from-year']) ? $_GET['from-year'] : null;
-$toYear = isset($_GET['to-year']) ? $_GET['to-year'] : null;
+$toYear = (isset($_GET['to-year']) + 1) ? ($_GET['to-year'] + 1) : null;
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
-$types = isset($_GET['types']) ? $_GET['types'] : []; // Assuming types come as an array of strings
+$types = isset($_GET['types']) ? $_GET['types'] : [];
 
 $sql = "SELECT dr.document_id, dr.student_id, dr.title, 
         JSON_UNQUOTE(JSON_EXTRACT(dr.metadata, '$.publication_date')) AS publication_year, 

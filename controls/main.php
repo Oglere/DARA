@@ -1,7 +1,7 @@
 <div class="contents">
     <p>D A R A</p>
     <h4>Digital Academic Repository and Archive</h4>
-    <form action="results.php" method="get">
+    <form action="view/results.php" method="get">
         <div class="search">
             <input name="search" type="text" placeholder="Search..." required>
             <button type="submit">
