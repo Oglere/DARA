@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/mainpage.scss">
     <title>DARA Main Page</title>
 </head>
+<<<<<<< HEAD
     <body>
         <main>
             <header>
@@ -55,8 +56,39 @@
                             <line x1="21" y1="21" x2="16.65" y2="16.65" />
                         </svg>
                     </button>
+=======
+<body>
+    <main>
+        <header>
+            <a href="#">
+                <div class="loginbutton">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-log-in"
+                    >
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                        <polyline points="10 17 15 12 10 7" />
+                        <line x1="15" y1="12" x2="3" y2="12" />
+                    </svg>
+                    <h4> &nbsp Login</h4>
+>>>>>>> 2ecd50c471a6bcb269a75af5eeb05929a51faf79
                 </div>
+            </a>
+        </header>
+        
+        <?php 
+            include "controls/main.php"
+        ?>
 
+<<<<<<< HEAD
                 <div class="tags">
                     <div class="tag">
                             <svg
@@ -126,5 +158,14 @@
             </footer>
         </main>
     </body>
+=======
+        <footer>
+            <a href="#">About DARA</a>
+            <p>&nbsp | &nbsp</p>
+            <a href="#">Contact us</a>
+        </footer>
+    </main>
+</body>
+>>>>>>> 2ecd50c471a6bcb269a75af5eeb05929a51faf79
 </html>
 <script src="js/index.js"></script>
