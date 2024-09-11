@@ -9,7 +9,7 @@
 <body>
     <main>
         <header>
-            <a href="#">
+            <a href="view/login.php">
                 <div class="loginbutton">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

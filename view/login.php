@@ -1,70 +1,56 @@
-<?php
-include '../db/db.php';
-session_start();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $usn = $_POST['usn'];
-    $password = $_POST['password'];
-
-    // Query to fetch the user details
-    $sql = "SELECT * FROM users WHERE usn = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $usn);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    // Directly compare the plain-text password with the one stored in the database
-    if ($user && $password === $user['password_hash']) { // Assuming the password is stored in 'password_hash' column
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['role'] = $user['role'];
-        if ($user['role'] == 'Student') {
-            header('Location: student_dashboard.php');
-        } elseif ($user['role'] == 'Teacher') {
-            header('Location: teacher_dashboard.php');
-        }
-        exit();
-    } else {
-        $error = "Invalid login credentials.";
-    }
-}
+<?php 
+    include "../controls/login/login_control.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>DARA - Login</title>
+    <link rel="stylesheet" href="../css/mainpage.scss">
     <link rel="stylesheet" href="../css/login.scss">
 </head>
 <body>
-    <form action="">
-asd
-    </form>
-    
-    <footer>
-        <a href="">About DARA </a>
-
-        <p>&nbsp | &nbsp</p>
-
-        <a href=""> Contact us</a>
-    </footer>
-=======
-    <title>DARA - Login</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-    <h1>Login</h1>
-    <?php if (isset($error)): ?>
-        <p><?= $error ?></p>
-    <?php endif; ?>
-    <form method="post">
-        USN: <input type="text" name="usn" required><br>
-        Password: <input type="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
->>>>>>> 2ecd50c471a6bcb269a75af5eeb05929a51faf79
+    <main>
+        <header> 
+            <a href="login.php">
+                <div class="loginbutton">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-log-in"
+                    >
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                        <polyline points="10 17 15 12 10 7" />
+                        <line x1="15" y1="12" x2="3" y2="12" />
+                    </svg>
+                    <h4> &nbsp Login</h4>
+                </div>
+            </a>
+        </header>
+        <div class="contents">
+            <h1>Login</h1>
+            <?php if (isset($error)): ?> 
+                <p><?= $error ?></p>
+            <?php endif; ?>
+            <form method="post">
+                USN: <input type="text" name="usn" required><br>
+                Password: <input type="password" name="password" required><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <footer>
+            <a href="#">About DARA</a>
+            <p>&nbsp | &nbsp</p>
+            <a href="#">Contact us</a>
+        </footer>
+    </main>
 </body>
 </html>
