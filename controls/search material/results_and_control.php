@@ -2,7 +2,7 @@
 include '../db/db.php';
 
 $fromYear = isset($_GET['from-year']) ? $_GET['from-year'] : null;
-$toYear = (isset($_GET['to-year']) + 1) ? ($_GET['to-year'] + 1) : null;
+$toYear = isset($_GET['to-year']) ? ((int)$_GET['to-year'] + 1) : null;
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 $types = isset($_GET['types']) ? $_GET['types'] : [];
 
@@ -19,7 +19,6 @@ $sql = "SELECT dr.document_id, dr.student_id, dr.title,
 $bindTypes = '';
 $bindParams = [];
 
-// Add search query condition
 if (!empty($searchQuery)) {
     $sql .= " AND (dr.title LIKE ? OR dr.metadata LIKE ?)";
     $searchTerm = "%$searchQuery%";
@@ -27,14 +26,12 @@ if (!empty($searchQuery)) {
     array_push($bindParams, $searchTerm, $searchTerm);
 }
 
-// Add year range condition
 if ($fromYear && $toYear) {
     $sql .= " AND JSON_UNQUOTE(JSON_EXTRACT(dr.metadata, '$.publication_date')) BETWEEN ? AND ?";
     $bindTypes .= 'ss';
     array_push($bindParams, $fromYear, $toYear);
 }
 
-// Add types condition
 if (!empty($types)) {
     $placeholders = implode(',', array_fill(0, count($types), '?'));
     $sql .= " AND dr.study_type IN ($placeholders)";

@@ -1,11 +1,9 @@
 <?php
 include '../db/db.php';
 
-// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Check if the ID is set and is an integer
 if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
     echo "Invalid document ID.";
     exit();
@@ -13,7 +11,6 @@ if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 
 $document_id = intval($_GET['id']);
 
-// Fetch the PDF file and metadata from the database
 $sql = "SELECT title, metadata, file FROM Document_Repository WHERE document_id = ?";
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
@@ -32,19 +29,16 @@ $row = $result->fetch_assoc();
 $pdf_data = $row['file'];
 $title = htmlspecialchars($row['title']);
 
-$metadata = json_decode($row['metadata'], true);  // Decode JSON into an associative array
+$metadata = json_decode($row['metadata'], true);
 
-// Handle errors during JSON decoding
 if (json_last_error() !== JSON_ERROR_NONE) {
     die('Error decoding JSON metadata: ' . json_last_error_msg());
 }
 
-// Extract specific fields from the metadata
 $abstract = htmlspecialchars($metadata['abstract'] ?? '');
 $publication_date = htmlspecialchars($metadata['publication_date'] ?? '');
 $keywords = json_decode($metadata['keywords'] ?? '[]', true);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +105,6 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
             <p><strong>Keywords:</strong> 
                 <?php 
                 if (is_array($keywords) && !empty($keywords)) {
-                    // Join all keywords with a comma and a space, then add a period at the end
                     echo implode(", ", $keywords) . ".";
                 } else {
                     echo "No keywords available.";

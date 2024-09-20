@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+.lain {
+  width: calc(100% - 20px);
+  height: 50px;
+  padding-top: 17.5px;
+  padding-bottom: 17.5px;
+  padding-left: 20px;
+  display: flex;
+  border-bottom: 1px #1e1e1e solid;
+  justify-content: space-between;
+}
+
+.ahh {
+  display: flex;
+  align-items: center;
+
+  .date {
+    position: absolute;
+    left: 20px;
+    top: 90px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #04128e !important;
+    padding-right: 7px;
+    font-weight: lighter;
+    margin: 0;
+  }
+
+  .search {
+    max-width: 100%;
+    width: 400px;
+    margin-left: 10px;
+    display: flex;
+    height: 35px;
+
+    button {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      border: none;
+      display: flex;
+      align-items: center;
+      color: white;
+      background-color: #8e0404;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ac0b0b;
+    }
+
+    input[type="text"] {
+      padding-left: 5px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border: 1px solid #8e0404;
+      height: calc(100% - 4px);
+      width: 100%;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+    }
+  }
+}
+
+.contents {
+  .inputs {
+    padding-left: 10px;
+    .user {
+      align-items: center;
+      svg {
+        color: #8e0404;
+      }
+      margin-bottom: 10px;
+      display: flex;
+      input[type="text"] {
+        border: 1px solid #8e0404;
+        height: 25px;
+        margin-left: 10px;
+      }
+      input[type="text"]:focus {
+        outline: none;
+      }
+    }
+    .pass {
+      align-items: center;
+      svg {
+        color: #8e0404;
+      }
+      margin-bottom: 10px;
+      display: flex;
+      input[type="password"] {
+        border: 1px solid #8e0404;
+        height: 25px;
+        margin-left: 10px;
+      }
+      input[type="password"]:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .ubos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  button[type="submit"] {
+    border-radius: 5px;
+    height: 25px;
+    width: 50px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #8e0404;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #ac0b0b;
+  }
+}

@@ -8,21 +8,16 @@
                     </a>
                 </li>
                 <?php
-                // Decode the JSON array of authors
                 $authorsArray = json_decode($row['authors'], true);
                 $authorsList = is_array($authorsArray) ? implode(', ', $authorsArray) : '';
 
-                // Decode the JSON array of keywords
                 $keywordArray = json_decode($row['keywords'], true);
                 $keywords = is_array($keywordArray) ? implode(', ', $keywordArray) : '';
 
-                // Format the publication year
                 $publicationDate = htmlspecialchars($row['publication_year']);
                 $date = new DateTime($publicationDate);
                 $year = $date->format('Y');
-
-
-                // Get the student's last name from the users table
+                
                 $studentLastName = htmlspecialchars($row['last_name']);
                 ?>
                 <p>Authors: <?= $studentLastName ?>, <?= htmlspecialchars($authorsList) ?> (<?= $year ?>)</p>

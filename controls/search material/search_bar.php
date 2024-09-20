@@ -20,8 +20,7 @@
             </svg>
         </button>
     </div>
-
-    <!-- Year Filter Inputs -->
+    
     <div class="date">
         <input type="number" id="from-year" name="from-year" min="1900" max="2100" step="1" placeholder="From Year" 
             value="<?= isset($_GET['from-year']) ? htmlspecialchars($_GET['from-year']) : '' ?>">

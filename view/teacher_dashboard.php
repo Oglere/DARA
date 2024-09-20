@@ -7,9 +7,8 @@ if ($_SESSION['role'] !== 'Teacher') {
     exit();
 }
 
-$teacher_id = $_SESSION['user_id']; // Get the logged-in teacher's ID
+$teacher_id = $_SESSION['user_id'];
 
-// Prepare the SQL query to fetch documents for the logged-in teacher
 $sql = "SELECT * FROM document_repository WHERE teacher_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $teacher_id);

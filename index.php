@@ -8,7 +8,7 @@
 </head>
 <body>
     <main>
-        <header>
+        <header> 
             <a href="view/login.php">
                 <div class="loginbutton">
                     <svg

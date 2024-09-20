@@ -1,0 +1,81 @@
+ROUTER1 (SITE A)
+
+interface fa0/0
+ip address 172.16.20.1 255.255.255.0
+no shutdown
+
+interface serial0/0/0
+ip address 11.11.11.1 255.255.255.252
+clock rate 64000
+no shutdown
+
+ip route 192.168.10.0 255.255.255.0 11.11.11.2
+
+crypto isakmp policy 10
+encryption aes
+hash sha
+authentication pre-share
+group 2
+exit
+
+crypto isakmp key MY_VPN_KEY address 12.12.12.2
+
+crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac
+
+crypto map VPN-MAP 10 ipsec-isakmp
+set peer 12.12.12.2
+set transform-set VPN-SET
+match address 10
+exit
+
+interface serial0/0/0
+crypto map VPN-MAP
+
+access-list 10 permit ip 172.16.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+
+ROUTER2
+interface serial0/0/0
+ip address 11.11.11.2 255.255.255.252
+no shutdown
+
+interface serial0/0/1
+ip address 12.12.12.1 255.255.255.252
+no shutdown
+
+ip route 172.16.20.0 255.255.255.0 11.11.11.1
+ip route 192.168.10.0 255.255.255.0 12.12.12.2
+
+ROUTER3 (SITE B)
+interface fa0/0
+ip address 192.168.10.1 255.255.255.0
+no shutdown
+
+interface serial0/0/0
+ip address 12.12.12.2 255.255.255.252
+no shutdown
+
+ip route 172.16.20.0 255.255.255.0 12.12.12.1
+
+crypto isakmp policy 10
+encryption aes
+hash sha
+authentication pre-share
+group 2
+exit
+
+crypto isakmp key MY_VPN_KEY address 11.11.11.1
+
+crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac
+
+crypto map VPN-MAP 10 ipsec-isakmp
+set peer 11.11.11.1
+set transform-set VPN-SET
+match address 10
+exit
+
+interface serial0/0/0
+crypto map VPN-MAP
+
+access-list 10 permit ip 192.168.10.0 0.0.0.255 172.16.20.0 0.0.0.255
+
+

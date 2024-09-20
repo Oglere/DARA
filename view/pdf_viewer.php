@@ -3,8 +3,7 @@ include '../db/db.php';
 
 if (isset($_GET['id'])) {
     $document_id = $_GET['id'];
-
-    // Fetch the PDF file from the database
+    
     $sql = "SELECT file FROM document_repository WHERE document_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $document_id);

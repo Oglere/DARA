@@ -2,7 +2,7 @@
 include '../db/db.php';
 session_start();
 
-if ($_SESSION['role'] !== 'Student') {
+if (!$_SESSION) {
     header('Location: login.php');
     exit();
 }
