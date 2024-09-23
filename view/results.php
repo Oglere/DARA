@@ -9,32 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/results.scss">
     <link rel="stylesheet" href="../css/mainpage.scss">
+    <link rel="stylesheet" href="../css/student_nav.scss">
     <title>DARA Main Page</title>
 </head>
 <body>
     <main>
         <header>
-            <a href="login.php">
-                <div class="loginbutton">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="feather feather-log-in"
-                    >
-                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                        <polyline points="10 17 15 12 10 7" />
-                        <line x1="15" y1="12" x2="3" y2="12" />
-                    </svg>
-                    <h4> &nbsp Login</h4>
-                </div>
-            </a>
+            <?php 
+                include "../controls/header_identification.php";
+            ?>
+            
             <div class="ahh">
                 <p>D A R A</p>
                 <?php 
@@ -45,13 +29,17 @@
 
         <div class="blabla">
             <div class="kilid">
-                <div class="tagform">
-                    <div class="lefttag">
-                        
-                    </div>
-                    <div class="midtag"></div>
-                    <div class="righttag"></div>
-                </div>
+                <?php 
+                    if ($_SESSION) {
+                        if ($_SESSION['role'] == 'Student') {
+                                include "../controls/student/student_nav.php";
+                            }
+                            elseif ($_SESSION['role'] == 'Teacher') {
+                                include "../controls/teacher/teacher_nav.php";
+                            }
+                        }
+                    
+                ?>
             </div>
 
             <div class="cell_container">

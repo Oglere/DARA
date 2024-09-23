@@ -27,6 +27,7 @@ $result = $stmt->get_result();
     <h1>Student Dashboard</h1>
     <p><a href="logout.php">Logout</a></p>
     <p><a href="submit.php">Submit a New Document</a></p>
+    <p><a href="../">Search</a></p>
     <h2>Your Submissions</h2>
     <?php if ($result->num_rows > 0): ?>
         <ul>

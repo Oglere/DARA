@@ -1,7 +1,9 @@
 <?php 
     include "../controls/login/login_control.php";
 
-    
+    if ($_SESSION) {
+        header('Location: ../');
+    }
 ?>
 
 <!DOCTYPE html>
