@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['role'] = $user['role'];
         if ($user['role'] == 'Student') {
             header('Location: student_dashboard.php');
+            header("Refresh: 0");
         } elseif ($user['role'] == 'Teacher') {
             header('Location: teacher_dashboard.php');
         }

@@ -1,3 +1,7 @@
+<script>
+    history.pushState()
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

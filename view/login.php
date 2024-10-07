@@ -5,6 +5,9 @@
         header('Location: ../');
     }
 ?>
+<!-- <script>
+    window.history.forward();
+</script> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,14 +21,13 @@
     <main>
         <div class="lain"> 
             <div class="ahh">
-                <a href="../">D A R A</a>
                 <?php 
                     include "../controls/search material/search_bar.php";
                 ?>
             </div>
         </div>
         <div class="contents">
-            <h1>Login</h1>
+            <h1>D A R A</h1>
             
             <form method="post">
                 <div class="inputs">
@@ -71,12 +73,12 @@
                     </div>    
                 </div>
                 <div class="ubos">
-                    <button type="submit">Login</button>
+                    <button type="submit">L O G I N</button>
                     <a href="request">Forgot password?</a>
                 </div>
             </form>
             <?php if (isset($error)): ?> 
-                <div class="error"><?= $error ?></div>
+                <div style="color: red; margin-top: 10px;" class="error"><?= $error ?></div>
             <?php endif; ?>
         </div>
         <footer>
