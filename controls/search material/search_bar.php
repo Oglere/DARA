@@ -1,3 +1,9 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    echo "<script> window.location.assign('../../') </script>";
+}
+?>
+
 <form action="results.php" method="get">
     <div class="search">
         <input id="srch" name="search" type="text" placeholder="Search..." 

@@ -1,3 +1,9 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    echo "<script> window.location.assign('../../') </script>";
+}
+?>
+
 <div class="profile">
     <?php 
     

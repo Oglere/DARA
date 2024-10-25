@@ -1,4 +1,10 @@
 <?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    echo "<script> window.location.assign('../../') </script>";
+}
+?>
+
+<?php
 include '../db/db.php';
 
 $fromYear = isset($_GET['from-year']) ? $_GET['from-year'] : null;

@@ -1,3 +1,9 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    echo "<script> window.location.assign('../') </script>";
+}
+?>
+
 <div class="contents">
     <p>D A R A</p>
     <h4>Digital Academic Repository and Archive</h4>

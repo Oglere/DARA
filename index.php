@@ -1,5 +1,5 @@
 <script>
-    history.pushState()
+    window.history.forward();
 </script>
 
 <!DOCTYPE html>

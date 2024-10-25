@@ -23,8 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $student_id = $_SESSION['user_id'];
     $teacher_id = $_POST['teacher_id'];
 
-    // Reading the PDF file content
-    $pdf = file_get_contents($_FILES['file']['tmp_name']);
+    // Ensure file is uploaded
+    if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
+        $pdf = file_get_contents($_FILES['file']['tmp_name']);
+    } else {
+        echo "Error: File not uploaded or there was an issue with the upload.";
+        exit();
+    }
 
     // Prepare SQL statement
     $sql = "INSERT INTO document_repository (title, student_id, teacher_id, authors, citations, metadata, file, status, date_submitted) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', NOW())";
@@ -37,55 +42,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error: " . $stmt->error;
     }
 }
+
 ?>
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DARA - Submit a Document</title>
+    <title>DARA - Student Dashboard</title>
+    <link rel="stylesheet" href="../css/mainpage.scss">
+    <link rel="stylesheet" href="../css/std.scss">
+    <link rel="stylesheet" href="../css/submit.scss"> 
 </head>
 <body>
-    <h1>Submit a New Document</h1>
-    <form method="post" enctype="multipart/form-data">
-        Title: <input type="text" name="title" required><br>
-        Abstract: <textarea name="abstract" required></textarea><br>
-        Main Author: <input type="text" name="main_author" required><br>
-        Co-Authors (comma-separated): <input type="text" name="co_authors"><br>
-        Teacher: 
-        <select name="teacher_id" required>
-            <option value="">Select a Teacher</option>
-            <?php foreach ($teachers as $teacher): ?>
-                <option value="<?= $teacher['user_id'] ?>"><?= htmlspecialchars($teacher['name']) ?></option>
-            <?php endforeach; ?>
-        </select><br>
-        Publication Date: <input type="date" name="publication_date"><br>
-        Keywords (comma-separated): <input type="text" name="keywords"><br>
-        Citations (comma-separated): <input type="text" name="citations"><br>
-        File: <input type="file" name="file" accept=".pdf" required><br>
-        <div class="checkboxes">
-            <div class="chkbx">
-                <input class="w3-check" type="checkbox" checked="checked">
-                <label>Case Study</label>
+    <main>
+        <header> 
+            <div class="ahh">
+                <img src="../Imgs/DARA.png" alt="" style="height: 50px;">
             </div>
-            <div class="chkbx">
-                <input class="w3-check" type="checkbox">
-                <label>Thesis</label>
+        </header>
+        
+        <div class="main">
+            <div class="left">
+                <div class="profile">
+                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
+                    <a href="logout.php" class="logout-btn"> 
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-log-in"
+                            >
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
+                        </svg>
+
+
+                        &nbsp; Logout</a>
+                </div>
+
+                <nav class="nav-links">
+                    <a href="student_dashboard.php">Dashboard</a>
+                    <a href="status.php">View Study Status</a>
+                    <a href="../">Search Studies</a>
+                </nav>
             </div>
-            <div class="chkbx">
-                <input class="w3-check" type="checkbox">
-                <label>Proposal</label>
-            </div>
-            <div class="chkbx">
-                <input class="w3-check" type="checkbox">
-                <label>Capstone</label>
-            </div>
-            <div class="chkbx">
-                <input class="w3-check" type="checkbox">
-                <label>System Studies</label>
+
+            <div class="right">
+
+                <?php include "../controls/student/std_submit.php" ?>
+
             </div>
         </div>
-        <button type="submit">Submit</button>
-    </form>
+
+        <footer>
+            <a href="#">About DARA</a>
+            <p>&nbsp | &nbsp</p>
+            <a href="#">Contact us</a>
+        </footer>
+    </main>
 </body>
 </html>
+<script src="js/index.js"></script>

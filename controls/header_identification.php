@@ -1,9 +1,15 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    echo "<script> window.location.assign('../') </script>";
+}
+?>
+
 <?php 
 session_start();
 if (!$_SESSION) {
 
     echo '
-    <a href="login.php">
+    <a class="death" href="login.php">
         <div class="loginbutton">
             <svg
                 xmlns="http://www.w3.org/2000/svg"

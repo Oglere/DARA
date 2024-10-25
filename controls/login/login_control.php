@@ -1,4 +1,10 @@
 <?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    echo "<script> window.location.assign('../../') </script>";
+}
+?>
+
+<?php
 include '../db/db.php';
 session_start();
 
@@ -16,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && $password === $user['password_hash']) {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['role'] = $user['role'];
+        $_SESSION['first_name'] = $user['first_name'];
         if ($user['role'] == 'Student') {
             header('Location: student_dashboard.php');
             header("Refresh: 0");

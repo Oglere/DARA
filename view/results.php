@@ -20,7 +20,7 @@
             ?>
             
             <div class="ahh">
-                <p>D A R A</p>
+                <a class="help" href="../">D A R A</a>
                 <?php 
                     include "../controls/search material/search_bar.php";
                 ?>
@@ -29,17 +29,6 @@
 
         <div class="blabla">
             <div class="kilid">
-                <?php 
-                    if ($_SESSION) {
-                        if ($_SESSION['role'] == 'Student') {
-                                include "../controls/student/student_nav.php";
-                            }
-                            elseif ($_SESSION['role'] == 'Teacher') {
-                                include "../controls/teacher/teacher_nav.php";
-                            }
-                        }
-                    
-                ?>
             </div>
 
             <div class="cell_container">

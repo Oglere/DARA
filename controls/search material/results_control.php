@@ -1,3 +1,9 @@
+<?php
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+    echo "<script> window.location.assign('../../') </script>";
+}
+?>
+
 <?php if (isset($result) && $result->num_rows > 0): ?>
     <ul>
         <?php while ($row = $result->fetch_assoc()): ?>
