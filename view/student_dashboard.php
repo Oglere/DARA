@@ -45,7 +45,7 @@ $data = $result->fetch_assoc();
                 <img src="../Imgs/DARA.png" alt="">
             </div>
         </header>
-        
+         
         <div class="main">
             <div class="left">
                 <div class="profile">
@@ -73,7 +73,7 @@ $data = $result->fetch_assoc();
                 </div>
 
                 <nav class="nav-links">
-                    <a href="status.php">Dashboard</a>
+                    <a href="student_dashboard.php">Dashboard</a>
                     <a href="submit.php">Submit Studies</a>
                     <a href="status.php">View Study Status</a>
                     <a href="../">Search Studies</a>

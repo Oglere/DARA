@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
-                            stroke-linecap="round"
+                            stroke-linecap="round" 
                             stroke-linejoin="round"
                             class="feather feather-log-in"
                             >
@@ -83,12 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <line x1="15" y1="12" x2="3" y2="12" />
                         </svg>
 
-
                         &nbsp; Logout</a>
                 </div>
 
                 <nav class="nav-links">
                     <a href="student_dashboard.php">Dashboard</a>
+                    <a href="submit.php">Submit Studies</a>
                     <a href="status.php">View Study Status</a>
                     <a href="../">Search Studies</a>
                 </nav>

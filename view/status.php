@@ -22,7 +22,7 @@ $result = $stmt->get_result();
     <title>DARA - Student Dashboard</title>
     <link rel="stylesheet" href="../css/mainpage.scss">
     <link rel="stylesheet" href="../css/std.scss">
-    <link rel="stylesheet" href="../css/submit.scss"> 
+    <link rel="stylesheet" href="../css/std_status.scss"> 
 </head>
 <body>
     <main>
@@ -31,7 +31,7 @@ $result = $stmt->get_result();
                 <img src="../Imgs/DARA.png" alt="" style="height: 50px;">
             </div>
         </header>
-        
+         
         <div class="main">
             <div class="left">
                 <div class="profile">
@@ -42,7 +42,7 @@ $result = $stmt->get_result();
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
-                            fill="none"
+                            fill="none" 
                             stroke="currentColor"
                             stroke-width="2"
                             stroke-linecap="round"
@@ -61,6 +61,7 @@ $result = $stmt->get_result();
                 <nav class="nav-links">
                     <a href="student_dashboard.php">Dashboard</a>
                     <a href="submit.php">Submit Studies</a>
+                    <a href="status.php">View Study Status</a>
                     <a href="../">Search Studies</a>
                 </nav>
             </div>
@@ -84,4 +85,4 @@ $result = $stmt->get_result();
     </main>
 </body>
 </html>
-<script src="js/index.js"></script>
+<script src="../js/status.js"></script>

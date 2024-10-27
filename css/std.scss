@@ -29,14 +29,12 @@
         align-items: center;
         justify-content: center;
         padding: 8px 15px;
-        background-color: #8e0404;
-        color: white;
         text-decoration: none;
         border-radius: 5px;
       }
 
       .logout-btn:hover {
-        background-color: #ac0b0b;
+        background-color: #d8c5c5;
       }
     }
 
@@ -47,16 +45,14 @@
 
       a {
         text-align: center;
-        margin-bottom: 20px;
         padding: 10px 0;
-        background-color: #04128e;
-        color: white;
+        color: black;
         text-decoration: none;
         border-radius: 5px;
       }
 
       a:hover {
-        background-color: #286090;
+        background-color: #e7e7e7;
       }
     }
   }

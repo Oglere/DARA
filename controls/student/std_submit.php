@@ -25,7 +25,7 @@
                 <p>Files Supported: PDF</p>
                 <input type="file" name="file" accept=".pdf" id="fileID" style="display:none;" required>
                 <button type="button" class="btn" id="chooseFileBtn">Choose File</button>
-                <p id="fileNameDisplay"></p> <!-- Display file name here -->
+                <p id="fileNameDisplay"></p>
             </div>
         </div>
     </div>
@@ -61,11 +61,11 @@
     const fileNameDisplay = document.getElementById("fileNameDisplay");
 
     chooseFileBtn.addEventListener("click", () => {
-        inputFile.click(); // Trigger the file input
+        inputFile.click();
     });
 
     inputFile.addEventListener("change", function () {
-        const fileName = this.files[0].name; // Get the selected file name
-        fileNameDisplay.textContent = `Selected file: ${fileName}`; // Display the file name
+        const fileName = this.files[0].name;
+        fileNameDisplay.textContent = `Selected file: ${fileName}`;
     });
 </script>
