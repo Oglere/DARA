@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['role'] = $user['role'];
         $_SESSION['first_name'] = $user['first_name'];
         if ($user['role'] == 'Student') {
-            header('Location: student_dashboard.php');
+            header('Location: ../student');
             header("Refresh: 0");
         } elseif ($user['role'] == 'Teacher') {
-            header('Location: teacher_dashboard.php');
+            header('Location: ../teacher');
         }
         exit();
     } else {

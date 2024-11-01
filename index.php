@@ -13,12 +13,12 @@
 <body>
     <main>
         <header> 
-            <?php 
+        <?php 
             session_start();
             if (!$_SESSION) {
 
                 echo '
-                <a href="view/login.php">
+                <a class="death" href="login.php">
                     <div class="loginbutton">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -41,27 +41,28 @@
                 </a>';
             } else {
                 echo '
-                <a href="view/logout.php">
-                    <div class="loginbutton">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-log-in"
-                        >
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                            <polyline points="10 17 15 12 10 7" />
-                            <line x1="15" y1="12" x2="3" y2="12" />
-                        </svg>
-                        <h4> &nbsp Logout</h4>
-                    </div>
-                </a>';
+                <a href="student/">
+                <div class="loginbutton">
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-user"
+                    >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                    </svg>
+
+                    <h4>&nbsp' . htmlspecialchars($_SESSION['first_name']) .' </h4>
+                </div>
+                </a>
+                ';
             }
 
             ?>

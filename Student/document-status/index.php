@@ -1,60 +1,45 @@
 <?php
-include '../db/db.php';
+include '../../db/db.php';
 session_start();
 
 if ($_SESSION['role'] !== 'Student') {
-    header('Location: login.php');
+    header('Location: ../../view/login.php');
     exit();
 }
 
 $user_id = $_SESSION['user_id'];
-$user_n = $_SESSION['first_name'];
 
-// Count studies based on their status
-$sql = "SELECT 
-            COUNT(CASE WHEN status = 'Pending' THEN 1 END) AS pending_count,
-            COUNT(CASE WHEN status = 'Approved' THEN 1 END) AS published_count,
-            COUNT(CASE WHEN status = 'Needs Revision' THEN 1 END) AS revision_count,
-            COUNT(CASE WHEN status = 'Rejected' THEN 1 END) AS rejected_count,
-            COUNT(*) AS total_submitted
-        FROM Document_Repository 
-        WHERE student_id = ?";
+$sql = "SELECT * FROM Document_Repository WHERE student_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
-$stmt->execute(); 
+$stmt->execute();
 $result = $stmt->get_result();
-$data = $result->fetch_assoc();
 ?>
-
-<script>
-    history.pushState();
-</script>
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>DARA - Student Dashboard</title>
-    <link rel="stylesheet" href="../css/std.scss">
-    <link rel="stylesheet" href="../css/mainpage.scss">
-    <link rel="stylesheet" href="../css/std_control.scss">
+    <link rel="stylesheet" href="../../css/mainpage.scss">
+    <link rel="stylesheet" href="../../css/std.scss">
+    <link rel="stylesheet" href="../../css/std_status.scss"> 
 </head>
 <body>
     <main>
         <header> 
             <div class="ahh">
-                <img src="../Imgs/DARA.png" alt="">
+                <img src="../../Imgs/DARA.png" alt="" style="height: 50px;">
             </div>
         </header>
          
         <div class="main">
             <div class="left">
                 <div class="profile">
-                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
-                    
+                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>
                 </div>
 
                 <nav class="nav-links">
-                    <a href="student_dashboard.php" style="color: #04128e; font-weight: normal;"> 
+                    <a href="../"> 
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +59,7 @@ $data = $result->fetch_assoc();
 
                         Dashboard
                     </a>
-                    <a href="submit.php">
+                    <a href="/dara/student/document-submission">
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +81,7 @@ $data = $result->fetch_assoc();
                     
                         Submit Studies
                     </a>
-                    <a href="status.php">
+                    <a href="#" style="color: #04128e; font-weight: normal;">
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
@@ -121,13 +106,13 @@ $data = $result->fetch_assoc();
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="../" class="unq">Search Studies</a>
+                    <a href="../../" class="unq">Search Studies</a>
 
                     <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="logout.php" class="logout-btn"> 
+                    <a href="../../view/logout.php" class="logout-btn"> 
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -149,10 +134,14 @@ $data = $result->fetch_assoc();
                     </a>
                 </nav>
             </div>
- 
+
             <div class="right">
 
-                <?php include "../controls/student/std_dashboard.php" ?>
+                <?php  
+                
+                    include "../../controls/student/std_status.php";
+
+                ?>
 
             </div>
         </div>
@@ -165,4 +154,4 @@ $data = $result->fetch_assoc();
     </main>
 </body>
 </html>
-<script src="js/index.js"></script>
+<script src="../js/status.js"></script>
