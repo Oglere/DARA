@@ -2,7 +2,6 @@
 <form method="post" enctype="multipart/form-data">
     Title: <input type="text" name="title" required><br>
     Abstract: <textarea name="abstract" required></textarea><br>
-    Main Author: <input type="text" name="main_author" required><br>
     Co-Authors (comma-separated): <input type="text" name="co_authors"><br>
     Teacher: 
     <select name="teacher_id" required>
