@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $student_id = $_SESSION['user_id'];
     $teacher_id = $_POST['teacher_id'];
 
-    // Ensure file is uploaded
     if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $pdf = file_get_contents($_FILES['file']['tmp_name']);
     } else {
@@ -30,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Prepare SQL statement
     $sql = "INSERT INTO document_repository (title, student_id, teacher_id, authors, citations, metadata, file, status, date_submitted) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', NOW())";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sisssss", $title, $student_id, $teacher_id, $co_authors, $citations, $metadata, $pdf);
@@ -63,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="main">
             <div class="left">
                 <div class="profile">
-                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
+                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>
                 </div>
 
                 <nav class="nav-links">

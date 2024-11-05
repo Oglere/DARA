@@ -59,6 +59,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
             overflow: hidden;
         }
         nav {
+            opacity: 0;
             width: 200px;
             background: #f4f4f4;
             padding: 15px;

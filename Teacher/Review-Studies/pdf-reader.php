@@ -47,7 +47,10 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
     <title>DARA - <?= $title ?></title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
         body {
+            font-family: "rubik";
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -59,6 +62,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
             overflow: hidden;
         }
         nav {
+            opacity: 0;
             width: 200px;
             background: #f4f4f4;
             padding: 15px;

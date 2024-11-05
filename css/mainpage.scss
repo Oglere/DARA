@@ -67,13 +67,13 @@ html {
       }
 
       .contents {
-        margin-top: 180px;
         width: calc(100% - 20px);
         height: 100%;
         padding: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
 
         p {
           color: #04128e !important;
@@ -126,8 +126,6 @@ html {
 
         .tags {
           max-width: 100%;
-          width: 702px;
-          height: 360px;
           padding: 20px;
           padding-top: 0;
           margin-top: 20px;

@@ -1,5 +1,5 @@
 <div class="status-container">
-    <h1>Status of Submitted Documents</h1>
+    <h1 style="font-weight: lighter;">STATUS OF SUBMITTED DOCUMENTS</h1>
     <?php if ($result->num_rows > 0): ?>
         <ul>
             <?php while ($row = $result->fetch_assoc()): ?>

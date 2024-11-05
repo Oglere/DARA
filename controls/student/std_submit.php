@@ -1,4 +1,4 @@
-<h1>Submit a New Document</h1>
+<h1 style="font-weight: lighter;">SUBMIT A DOCUMENT</h1>
 <form method="post" enctype="multipart/form-data">
     Title: <input type="text" name="title" required><br>
     Abstract: <textarea name="abstract" required></textarea><br>

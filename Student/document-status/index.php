@@ -32,7 +32,7 @@ $result = $stmt->get_result();
             </div>
         </header>
          
-        <div class="main">
+        <div class="main" style="height: 100%;">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>
