@@ -15,7 +15,7 @@ if ($_SESSION['role'] !== 'Teacher') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DARA - Student Dashboard</title>
+    <title>DARA - Review Studies</title>
     <link rel="stylesheet" href="../../css/std.scss">
     <link rel="stylesheet" href="../../css/mainpage.scss">
     <link rel="stylesheet" href="../../css/std_control.scss">
@@ -36,7 +36,7 @@ if ($_SESSION['role'] !== 'Teacher') {
                 </div>
 
                 <nav class="nav-links">
-                    <a href="../" style="color: #04128e; font-weight: normal;"> 
+                    <a href="../""> 
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ if ($_SESSION['role'] !== 'Teacher') {
 
                         Dashboard
                     </a>
-                    <a href="/dara/teacher/review-studies">
+                    <a href="/dara/teacher/review-studies" style="color: #04128e; font-weight: normal;">
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"

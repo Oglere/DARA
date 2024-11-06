@@ -34,7 +34,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("sisssss", $title, $student_id, $teacher_id, $co_authors, $citations, $metadata, $pdf);
 
     if ($stmt->execute()) {
-        echo "Study submitted successfully!";
+
+        echo `
+            <div class="notif">
+                <div class="imghere">
+                    <img src="../../imgs/review.png" alt="" />
+                </div>
+                <div
+                    class="teksto"
+                    style="display: flex; margin-top: -16px; text-align: center"
+                >
+                    <p>
+                    Submitted <br />
+                    Succesfully!
+                    </p>
+                </div>
+            </div>
+        `;
+
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -48,7 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>DARA - Student Dashboard</title>
     <link rel="stylesheet" href="../../css/mainpage.scss">
     <link rel="stylesheet" href="../../css/std.scss">
-    <link rel="stylesheet" href="../../css/submit.scss"> 
+    <link rel="stylesheet" href="../../css/submit.scss">
+    <link rel="stylesheet" href="../../css/yey.scss">
 </head>
 <body>
     <main>
@@ -58,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </header>
         
-        <div class="main">
+        <div class="main" style="height: calc(100% - 161px); overflow: hidden;">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>
@@ -162,9 +180,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="right">
-
-                <?php include "../../controls/student/std_submit.php" ?>
-
+                <?php
+                    include "../../controls/student/yey.php";
+                    include "../../controls/student/std_submit.php";
+                ?>
             </div>
         </div>
 

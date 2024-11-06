@@ -1,5 +1,12 @@
 <?php
 include '../../db/db.php';
+session_start();
+
+if ($_SESSION['role'] !== 'Teacher') {
+    header('Location: ../../view/login.php');
+    exit();
+}
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -40,132 +47,142 @@ $publication_date = htmlspecialchars($metadata['publication_date'] ?? '');
 $keywords = json_decode($metadata['keywords'] ?? '[]', true);
 ?>
 
-<!DOCTYPE html>
+<script>
+    history.pushState();
+</script>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DARA - <?= $title ?></title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
-
-        body {
-            font-family: "rubik";
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-        }
-        main {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        nav {
-            opacity: 0;
-            width: 200px;
-            background: #f4f4f4;
-            padding: 15px;
-        }
-        .contents {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            background-color: #fff;
-        }
-        aside {
-            width: 300px;
-            background: #f4f4f4;
-            padding: 15px;
-        }
-        #pdf-container {
-            height: 100%;
-            overflow-y: scroll;
-            border: 1px solid #ccc;
-        }
-        .page {
-            margin: 10px 0;
-            page-break-before: always;
-        }
-        canvas {
-            display: block;
-            width: 100%;
-        }
-    </style>
+    <title>DARA - Read: <?= $title ?></title>
+    <link rel="stylesheet" href="../../css/std.scss">
+    <link rel="stylesheet" href="../../css/mainpage.scss">
+    <link rel="stylesheet" href="../../css/std_control.scss">
+    <link rel="stylesheet" href="../../css/tch.pdf.scss">
 </head>
 <body>
     <main>
-        <nav>
-            <p>Page <span id="current-page">1</span> of <span id="total-pages"></span></p>
-        </nav>
-        <div class="contents">
-            <div id="pdf-container"></div>
+        <header> 
+            <div class="ahh">
+                <img src="../../Imgs/DARA.png" alt="">
+            </div>
+        </header>
+         
+        <div class="main" style="height: calc(100% - 161px); overflow: hidden;">
+            <div class="left">
+                <div class="profile">
+                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
+                    
+                </div>
+
+                <nav class="nav-links">
+                    <a href="../" style="color: #04128e; font-weight: normal;"> 
+                        <svg
+                            style="margin-right: 10px;"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-home"
+                            >
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+
+                        Dashboard
+                    </a>
+                    <a href="/dara/teacher/review-studies">
+                        <svg
+                            style="margin-right: 10px;"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-book-open"
+                            >
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg>
+
+                        Review Studies
+                    </a>
+                    <a href="/dara/student/document-status">
+                        <svg
+                            style="margin-right: 10px;"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-eye"
+                            >
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+
+                        View Study Status
+                    </a>
+
+                    <div class="asd2" style=" width: 100%; margin-top: 10px; display: flex; justify-content: center;">
+                        <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
+                    </div>
+
+                    <a href="../" class="unq">Search Studies</a>
+
+                    <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
+                        <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
+                    </div>
+
+                    <a href="../view/logout.php" class="../view/logout-btn"> 
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-log-in"
+                            >
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
+                        </svg>
+                        
+                        &nbsp; Logout
+                    </a>
+                </nav>
+            </div>
+ 
+            <div class="right" style="overflow: auto;">
+
+                <?php include "pdf.php" ?>
+
+            </div>
         </div>
-        <aside>
-            <h2>Document Metadata</h2>
-            <p><strong>Title:</strong> <?= $title ?></p>
-            <p><strong>Abstract:</strong> <?= $abstract ?></p>
-            <p><strong>Publication Date:</strong> <?= $publication_date ?></p>
-            <p><strong>Keywords:</strong> 
-                <?php 
-                if (is_array($keywords) && !empty($keywords)) {
-                    echo implode(", ", $keywords) . ".";
-                } else {
-                    echo "No keywords available.";
-                }
-                ?>
-            </p>
 
-        </aside>
+        <footer>
+            <a href="#">About DARA</a>
+            <p>&nbsp | &nbsp</p>
+            <a href="#">Contact us</a>
+        </footer>
     </main>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
-
-        const url = 'data:application/pdf;base64,<?= base64_encode($pdf_data) ?>';
-        let pdfDoc = null,
-            pageNum = 1,
-            scale = 1.5;
-
-        const container = document.getElementById('pdf-container');
-
-        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-            pdfDoc = pdfDoc_;
-            document.getElementById('total-pages').textContent = pdfDoc.numPages;
-            renderAllPages();
-        }).catch(function(error) {
-            console.error('Error loading PDF:', error);
-        });
-
-        function renderAllPages() {
-            for (let i = 1; i <= pdfDoc.numPages; i++) {
-                renderPage(i);
-            }
-        }
-
-        function renderPage(num) {
-            pdfDoc.getPage(num).then(function(page) {
-                const viewport = page.getViewport({scale: scale});
-                const canvas = document.createElement('canvas');
-                canvas.className = 'page';
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                container.appendChild(canvas);
-
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                page.render(renderContext).promise.then(function() {
-                    document.getElementById('current-page').textContent = num;
-                });
-            }).catch(function(error) {
-                console.error('Error rendering page:', error);
-            });
-        }
-    </script>
 </body>
 </html>
-
+<script src="js/index.js"></script>

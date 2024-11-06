@@ -32,7 +32,7 @@ $data = $result->fetch_assoc();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DARA - Student Dashboard</title>
+    <title>DARA - Teacher Dashboard</title>
     <link rel="stylesheet" href="../css/std.scss">
     <link rel="stylesheet" href="../css/mainpage.scss">
     <link rel="stylesheet" href="../css/std_control.scss">
@@ -45,7 +45,7 @@ $data = $result->fetch_assoc();
             </div>
         </header>
          
-        <div class="main">
+        <div class="main" style="height: 100%;">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
