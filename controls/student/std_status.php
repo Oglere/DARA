@@ -3,9 +3,18 @@
     <?php if ($result->num_rows > 0): ?>
         <ul>
             <?php while ($row = $result->fetch_assoc()): ?>
-                <li>
+                <li style="
+                <?php
+                    if ($row['status'] == "Approved") {
+                        echo "background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(105,255,78,1) 0%, rgba(149,254,255,1) 100%); border: none;";
+                    } elseif ($row['status'] == "Pending") {
+                        echo "background: linear-gradient(90deg, rgba(78,102,255,1) 0%, rgba(149,254,255,1) 100%);";
+                    }
+                ?>
+                "
+                >
                     <div class="okok">
-                        <span class="status <?= strtolower(str_replace(' ', '-', htmlspecialchars($row['status']))) ?>">
+                        <span class="status <?= strtolower(str_replace(' ', '-', htmlspecialchars($row['status']))) ?>" >
                             <?php if ($row['status'] === "Approved"): ?>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -13,15 +22,23 @@
                                     height="35"
                                     viewBox="0 0 24 24"
                                     fill="none"
-                                    stroke="currentColor"
+                                    stroke="url(#gradient)"
                                     stroke-width="2"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     class="feather feather-check-square"
-                                    >
+                                >
+                                    <defs>
+                                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color: rgba(105,255,78,1); stop-opacity: 1" />
+                                            <stop offset="100%" style="stop-color: rgba(149, 254, 255, 1); stop-opacity: 1" />
+                                        </linearGradient>
+                                    </defs>
                                     <polyline points="9 11 12 14 22 4"></polyline>
                                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                                 </svg>
+
+
                             <?php elseif ($row['status'] === "Pending"): ?>
                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                     width="35" 
@@ -72,20 +89,76 @@
                                 </svg>
                             <?php endif; ?>
                         </span>
+                        
+                        <div class="continents">
+                            <div class="top">
+                                <span class="title" style="
+                                <?php
+                                    if ($row['status'] == "Approved") {
+                                        echo "color: #2E5256;";
+                                    } elseif ($row['status'] == "Pending") {
+                                        echo "color: #D6DCFF;";
+                                    } 
+                                ?>
+                                ">
+                                <?= htmlspecialchars($row['title']) ?></span>
+                            </div>
+                            <div class="bottom">
+                                <div class="wtf">
+                                    <span class="date"style="
+                                        <?php
+                                            if ($row['status'] == "Approved") {
+                                                echo "color: #2E5256;";
+                                            } elseif ($row['status'] == "Pending") {
+                                                echo "color: #D6DCFF;";
+                                            } 
+                                        ?>
+                                        "
+                                    >
+                                    
+                                    Date submitted: 
+                                    
+                                    &nbsp;</span>
+                                    <div class="datete"style="
+                                        <?php
+                                            if ($row['status'] == "Approved") {
+                                                echo "color: #2E5256;";
+                                            } elseif ($row['status'] == "Pending") {
+                                                echo "color: #D6DCFF;";
+                                            } 
+                                        ?>
+                                        ">
+                                        <?= htmlspecialchars(date("M d, Y", strtotime($row['date_submitted']))) ?> at
+                                        <?= htmlspecialchars(date("h:i A", strtotime($row['date_submitted']))) ?>
+                                    </div>
 
-                        <span class="title"><?= htmlspecialchars($row['title']) ?></span>
+                                    <?php
+                                        if ($row['status'] == "Approved") {
+                                            echo "
+                                                <span class='date' style='margin-left: 20px; color: #2E5256;'> Date approved: &nbsp;</span>
+                                                <div class='datete' style='color: #2E5256;'>" .
+                                                    htmlspecialchars(date('M d, Y', strtotime($row['date_reviewed']))) . " at " .
+                                                    htmlspecialchars(date('h:i A', strtotime($row['date_reviewed']))) .
+                                                "</div>";
+                                        }
+                                    ?>
+                                </div>
+
+                                <div class="actions">
+                                    <?php
+                                        if ($row['status'] == "Pending") {
+                                            echo '
+                                            <button class="btn abandon" onclick="openModal(\'abandonModal\', ' . $row['document_id'] . ')">Abandon</button>
+                                            ';
+                                        }
+                                    ?>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="actions">
-                        <?php
-                            if ($row['status'] == "Pending") {
-                                // Display the Abandon button if status is "Pending"
-                                echo '
-                                <button class="btn abandon" onclick="openModal(\'abandonModal\', ' . $row['document_id'] . ')">Abandon</button>
-                                ';
-                            }
-                        ?>
-                    </div>
+                    
                 </li>
             <?php endwhile; ?>
         </ul>

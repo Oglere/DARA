@@ -46,7 +46,7 @@ $data = $result->fetch_assoc();
             </div>
         </header>
          
-        <div class="main" style="height: 100%;">
+        <div class="main" style="height: calc(100% - 162px);">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
@@ -150,7 +150,7 @@ $data = $result->fetch_assoc();
                 </nav>
             </div>
  
-            <div class="right">
+            <div class="right" style="overflow: auto;">
 
                 <?php include "../controls/student/std_dashboard.php" ?>
 

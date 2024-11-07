@@ -24,7 +24,6 @@
 
     li {
       background-color: #ffffff;
-      border: 1px solid #8e0404;
       justify-content: space-between;
       padding: 15px;
       margin-bottom: 10px;
@@ -35,6 +34,7 @@
 
       .title {
         margin-left: 20px;
+        margin-bottom: 20px;
         font-weight: bold;
         color: #04128e;
         padding-right: 100px;
@@ -69,12 +69,13 @@
         }
 
         .abandon {
-          background-color: #dc3545;
+          background-color: #dc35459e;
+          margin-top: 5px;
         }
       }
 
       .pending {
-        color: black;
+        color: #4e66ff;
       }
 
       .approved {
@@ -152,4 +153,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.top {
+  margin-bottom: 10px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+
+  .wtf {
+    display: flex;
+
+    .date {
+      color: #04128e;
+    }
+
+    .datete {
+      font-weight: lighter;
+      color: #04128e;
+    }
+  }
 }
