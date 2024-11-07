@@ -1,13 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
-.notif {
+.frbg {
+  visibility: hidden;
+  height: calc(100% - 131px);
   position: absolute;
   font-family: "rubik";
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &.fade-in {
+    visibility: visible;
+    transform: scale(1); // Smooth scale-up for fade-in effect
+    transition: visibility 0s 0s, transform 0.5s ease; // Visibility immediately, scale over 0.5s
+  }
+
+  &.fade-out {
+    transform: scale(0.9); // Smooth scale-down for fade-out effect
+    transition: visibility 0s 0.5s, transform 0.5s ease; // Delay visibility change by 0.5s
+    visibility: hidden; // Hide after transition
+  }
 
   .imghere {
+    margin-left: 1px;
+
     img {
       height: 100px;
       width: 100px;

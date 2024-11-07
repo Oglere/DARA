@@ -35,22 +35,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->execute()) {
 
-        echo `
-            <div class="notif">
-                <div class="imghere">
-                    <img src="../../imgs/review.png" alt="" />
-                </div>
-                <div
-                    class="teksto"
-                    style="display: flex; margin-top: -16px; text-align: center"
-                >
-                    <p>
-                    Submitted <br />
-                    Succesfully!
-                    </p>
-                </div>
-            </div>
-        `;
+        echo "
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const frbg = document.querySelector('.frbg');
+
+                    // Set initial visibility to hidden for the fade-in effect on refresh
+                    frbg.style.visibility = 'hidden';
+
+                    // Delay to trigger the fade-in effect after the page refreshes
+                    setTimeout(() => {
+                        // Add fade-in class for smooth appearance
+                        frbg.classList.add('fade-in');
+                        frbg.style.visibility = 'visible';
+                    }, 100); // Short delay to trigger visibility change
+
+                    // Remove fade-in after 2 seconds and add fade-out class
+                    setTimeout(() => {
+                        frbg.classList.remove('fade-in');
+                        frbg.classList.add('fade-out');
+                    }, 2000);
+
+                    // Hide element after fade-out completes
+                    setTimeout(() => {
+                        frbg.style.visibility = 'hidden';
+                        frbg.classList.remove('fade-out');
+                    }, 2500);
+                });
+            </script>
+
+        ";
+
 
     } else {
         echo "Error: " . $stmt->error;
@@ -180,8 +195,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="right">
+                <div class="frbg">
+                    <div class="notif">
+                        <div class="imghere">
+                            <img src="../../imgs/review.png" alt="" />
+                        </div>
+                        <div
+                            class="teksto"
+                            style="display: flex; margin-top: -16px; text-align: center"
+                        >
+                            <p>
+                            Submitted <br />
+                            Succesfully!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <?php
-                    include "../../controls/student/yey.php";
+
                     include "../../controls/student/std_submit.php";
                 ?>
             </div>

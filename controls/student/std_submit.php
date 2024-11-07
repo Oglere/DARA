@@ -51,7 +51,7 @@
             <label>System Studies</label>
         </div>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" onClick="submit();">Submit</button>
 </form>
 
 <script>
