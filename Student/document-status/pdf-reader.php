@@ -2,101 +2,81 @@
 include '../../db/db.php';
 session_start();
 
-if (!$_SESSION) {
-    header('Location: Location: ../../view/login.php');
+if ($_SESSION['role'] !== 'Student') {
+    header('Location: ../../view/login.php');
     exit();
 }
 
-$sql = "SELECT user_id, CONCAT(first_name, ' ', last_name) AS name FROM users WHERE role = 'Teacher'";
-$result = $conn->query($sql);
-$teachers = $result->fetch_all(MYSQLI_ASSOC);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $title = $_POST['title'];
-    $abstract = $_POST['abstract'];
-    $co_authors = json_encode(explode(',', $_POST['co_authors']));
-    $publication_date = $_POST['publication_date'];
-    $keywords = json_encode(explode(',', $_POST['keywords']));
-    $citations = json_encode(explode(',', $_POST['citations']));
-    $metadata = json_encode(['abstract' => $abstract, 'publication_date' => $publication_date, 'keywords' => $keywords]);
-    $student_id = $_SESSION['user_id'];
-    $teacher_id = $_POST['teacher_id'];
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
-        $pdf = file_get_contents($_FILES['file']['tmp_name']);
-    } else {
-        echo "Error: File not uploaded or there was an issue with the upload.";
-        exit();
-    }
-
-    $sql = "INSERT INTO document_repository (title, student_id, teacher_id, authors, citations, metadata, file, status, date_submitted) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', NOW())";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sisssss", $title, $student_id, $teacher_id, $co_authors, $citations, $metadata, $pdf);
-
-    if ($stmt->execute()) {
-
-        echo "
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const frbg = document.querySelector('.frbg');
-
-                    // Set initial visibility to hidden for the fade-in effect on refresh
-                    frbg.style.visibility = 'hidden';
-
-                    // Delay to trigger the fade-in effect after the page refreshes
-                    setTimeout(() => {
-                        // Add fade-in class for smooth appearance
-                        frbg.classList.add('fade-in');
-                        frbg.style.visibility = 'visible';
-                    }, 100); // Short delay to trigger visibility change
-
-                    // Remove fade-in after 2 seconds and add fade-out class
-                    setTimeout(() => {
-                        frbg.classList.remove('fade-in');
-                        frbg.classList.add('fade-out');
-                    }, 2000);
-
-                    // Hide element after fade-out completes
-                    setTimeout(() => {
-                        frbg.style.visibility = 'hidden';
-                        frbg.classList.remove('fade-out');
-                    }, 2500);
-                });
-            </script>
-
-        ";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
+    echo "Invalid document ID.";
+    exit();
 }
 
+$document_id = intval($_GET['id']);
+
+$sql = "SELECT title, metadata, file FROM Document_Repository WHERE document_id = ?";
+$stmt = $conn->prepare($sql);
+if ($stmt === false) {
+    die('Prepare failed: ' . htmlspecialchars($conn->error));
+}
+$stmt->bind_param("i", $document_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    echo "Document not found.";
+    exit();
+}
+
+$row = $result->fetch_assoc();
+$pdf_data = $row['file'];
+$title = htmlspecialchars($row['title']);
+
+$metadata = json_decode($row['metadata'], true);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    die('Error decoding JSON metadata: ' . json_last_error_msg());
+}
+
+$abstract = htmlspecialchars($metadata['abstract'] ?? '');
+$publication_date = htmlspecialchars($metadata['publication_date'] ?? '');
+$keywords = json_decode($metadata['keywords'] ?? '[]', true);
 ?>
+
+<script>
+    history.pushState();
+</script>
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DARA - Student Dashboard</title>
-    <link rel="stylesheet" href="../../css/mainpage.scss">
+    <title>DARA - Read: <?= $title ?></title>
     <link rel="stylesheet" href="../../css/std.scss">
-    <link rel="stylesheet" href="../../css/submit.scss">
-    <link rel="stylesheet" href="../../css/yey.scss">
+    <link rel="stylesheet" href="../../css/mainpage.scss">
+    <link rel="stylesheet" href="../../css/std_control.scss">
+    <link rel="stylesheet" href="../../css/std.pdf.scss">
 </head>
 <body>
     <main>
         <header> 
             <div class="ahh">
-                <img src="../../Imgs/DARA.png" alt="" style="height: 50px;">
+                <img src="../../Imgs/DARA.png" alt="">
             </div>
         </header>
-        
-        <div class="main" style="height: calc(100% - 121px); overflow: hidden;">
+         
+        <div class="main" style="height: calc(100% - 121 qpx); overflow: hidden;">
             <div class="left">
                 <div class="profile">
-                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>
+                    <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
+                    
                 </div>
 
                 <nav class="nav-links">
-                    <a href="../"> 
+                    <a href="../" > 
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         Dashboard
                     </a>
-                    <a href="#" style="color: #04128e; font-weight: normal;">
+                    <a href="/dara/student/document-submission">
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
@@ -163,13 +143,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="../../" class="unq">Search Studies</a>
+                    <a href="../" class="unq">Search Studies</a>
 
                     <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="../../view/logout.php" class="logout-btn"> 
+                    <a href="../view/logout.php" class="../view/logout-btn"> 
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -191,29 +171,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </a>
                 </nav>
             </div>
+ 
+            <div class="right" style="overflow: auto;">
 
-            <div class="right">
-                <div class="frbg">
-                    <div class="notif">
-                        <div class="imghere">
-                            <img src="../../imgs/review.png" alt="" />
-                        </div>
-                        <div
-                            class="teksto"
-                            style="display: flex; margin-top: -16px; text-align: center"
-                        >
-                            <p>
-                            Submitted <br />
-                            Succesfully!
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
-                <?php
 
-                    include "../../controls/student/std_submit.php";
+                <?php 
+                
+                    include "../../controls/pdf_identification.php"; 
+                    include "pdf.php"; 
+                
                 ?>
+
             </div>
         </div>
 

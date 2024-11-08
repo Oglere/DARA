@@ -10,6 +10,7 @@
   display: flex;
 
   .left {
+    overflow: auto;
     width: 210px;
     display: flex;
     flex-direction: column;

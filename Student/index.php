@@ -46,7 +46,7 @@ $data = $result->fetch_assoc();
             </div>
         </header>
          
-        <div class="main" style="height: calc(100% - 162px);">
+        <div class="main" style="height: calc(100% - 121px);">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->

@@ -14,6 +14,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+ 
 ?>
 
 <html lang="en">
@@ -32,7 +33,7 @@ $result = $stmt->get_result();
             </div>
         </header>
          
-        <div class="main" style="height: calc(100% - 162px);">
+        <div class="main" style="height: calc(100% - 121px);">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>

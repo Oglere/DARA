@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+// Variables for colors and dimensions
+$background-color: #f5f5f5;
+$border-color: #ddd;
+$box-shadow-color: rgba(0, 0, 0, 0.2);
+$canvas-shadow-color: rgba(0, 0, 0, 0.15);
+$container-width: 920px;
+$button-color: #007bff;
+
+.pdfmain {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+#pdf-container {
+  font-family: "Rubik", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $background-color;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px $box-shadow-color;
+  max-width: 100%;
+  width: $container-width;
+  margin: 20px auto;
+
+  canvas.page {
+    width: 100%; // Responsive width to max out at container width
+    max-width: 920px; // Keeps it within defined width limit
+    height: auto; // Scales the height according to width for responsiveness
+    margin: 15px 0;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px $canvas-shadow-color;
+  }
+
+  #pdf-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    button {
+      background-color: $button-color;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0 5px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($button-color, 10%);
+      }
+    }
+
+    #current-page,
+    #total-pages {
+      font-weight: bold;
+      margin: 0 5px;
+    }
+  }
+}
