@@ -66,6 +66,9 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
             <div class="ahh">
                 <img src="../../Imgs/DARA.png" alt="">
             </div>
+            <?php 
+                include "../../controls/pdf_identification.php"; 
+            ?>
         </header>
          
         <div class="main" style="height: calc(100% - 121 qpx); overflow: hidden;">
@@ -104,7 +107,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
                             height="24"
                             viewBox="0 0 24 24"
                             fill="none"
-                            stroke="currentColor"
+                            stroke="currentColor" 
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
@@ -149,7 +152,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="../view/logout.php" class="../view/logout-btn"> 
+                    <a href="../../view/logout.php" class="../view/logout-btn"> 
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -178,7 +181,6 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
 
                 <?php 
                 
-                    include "../../controls/pdf_identification.php"; 
                     include "pdf.php"; 
                 
                 ?>

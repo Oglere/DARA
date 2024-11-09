@@ -11,7 +11,12 @@ $button-color: #007bff;
 .pdfmain {
   display: flex;
   justify-content: center;
-  padding: 20px;
+}
+
+.pdfaside,
+.nav {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 #pdf-container {
