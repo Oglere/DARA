@@ -1,42 +1,61 @@
+form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+}
+
 .btn {
+  border-radius: 49px;
   position: absolute;
   margin-top: 140px;
   margin-right: 40px;
-  width: 165px;
+  width: 175px;
   font-weight: lighter;
   height: 40px;
   display: flex;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   transition: all 0.1s ease;
   align-items: center;
   font-family: "rubik";
-  border-bottom: 1px grey solid;
-}
-
-.batan {
-  font-weight: lighter;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.1s ease;
-  font-family: "rubik";
-}
-
-.btn:hover {
-  font-weight: normal;
-  color: #8e0404;
-  background-color: rgb(224, 224, 224);
-}
-
-.btn.confirm {
-  background-color: ;
+  justify-content: center;
+  background-color: #8e0404;
   color: white;
 }
 
-.btn.cancel {
-  background-color: #ddd;
+.batan {
+  border-radius: 49px;
+  width: 175px;
+  margin-top: 40px;
+  font-weight: lighter;
+  height: 40px;
+  display: flex;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  align-items: center;
+  font-family: "rubik";
+  justify-content: center;
+}
+
+.btn:hover {
+  box-shadow: 3px 3px 4px #7b7b7b, -3px -3px 4px #ffffff;
+  color: white;
+  font-weight: normal;
+}
+
+.confirm {
+  background-color: #8e0404;
+  color: white;
+}
+
+.confirm:hover {
+  box-shadow: 3px 3px 4px #7b7b7b, -3px -3px 4px #ffffff;
+  font-weight: normal;
+}
+
+.cancel {
   color: #333;
 }
 

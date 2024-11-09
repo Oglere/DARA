@@ -2,7 +2,6 @@
 include '../../db/db.php';
 ?>
 
-<!-- Loading Overlay -->
 <div id="loading-overlay">
     <div class="loader"></div>
     <p>Loading...</p>
@@ -39,7 +38,6 @@ include '../../db/db.php';
 </div>
 
 <style>
-    /* Loading overlay styles */
     #loading-overlay {
         top: 0;
         left: 0;

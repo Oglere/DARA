@@ -18,7 +18,7 @@ if ($_SESSION['role'] !== 'Student' || !isset($_SESSION['user_id'])) {
 $document_id = intval($_GET['id']);
 $stadid = $_SESSION['user_id'];
 
-$sql = "SELECT title, metadata, file FROM Document_Repository WHERE document_id = ? AND student_id = ?";
+$sql = "SELECT * FROM Document_Repository WHERE document_id = ? AND student_id = ?";
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
     die('Prepare failed: ' . htmlspecialchars($conn->error));
@@ -202,7 +202,7 @@ $keywords = is_array($metadata['keywords']) ? $metadata['keywords'] : [];
                 </nav>
             </div>
  
-            <div class="right" style="overflow: auto;">
+            <div class="right" style="overflow: auto; background-color:">
 
 
 

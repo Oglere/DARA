@@ -1,3 +1,41 @@
+<style>
+    .batan {
+        border-radius: 49px;
+        width: 175px;
+        margin-top: 40px;
+        font-weight: lighter;
+        height: 40px;
+        display: flex;
+        border: none;
+        cursor: pointer;
+        transition: all 0.1s ease;
+        align-items: center;
+        font-family: "rubik";
+        justify-content: center;
+    }
+
+    .confirm {
+        background-color: #8e0404;
+        color: white;
+    }
+
+    .confirm:hover {
+        box-shadow: 3px 3px 4px #7b7b7b, -3px -3px 4px #ffffff;
+        font-weight: normal;
+    }
+
+    .cancel {
+        color: #333;
+    }
+
+    form {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        justify-content: space-between;
+    }
+</style>
+
 <div class="status-container">
     <h1 style="font-weight: lighter;">STATUS OF SUBMITTED DOCUMENTS</h1>
     <?php if ($result->num_rows > 0): ?>
@@ -234,15 +272,19 @@
     <?php endif; ?>
 </div>
 
-<form id="abandonModal" class="modal" action="../../controls/student/abandon_document.php" method="POST">
+<div id="abandonModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal('abandonModal')">&times;</span>
         <h2>Abandon Document</h2>
-        <p>Are you sure you want to abandon this document?</p>
-        <input type="hidden" name="document_id" id="documentIdInput">
-        <button type="submit">Confirm</button>
+        <p>Are you sure you want to abandon this document? <br> You can still recover this document later.</p>
+        <div class="modal-actions">
+            <form action="../../controls/student/abandon_document.php" method="POST">
+                <input type="hidden" name="document_id" id="documentIdInput">
+                <button type="submit" class="batan confirm">Confirm</button>
+                <button type="button" class="batan cancel" onclick="closeModal('abandonModal')">Cancel</button>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 
 <script>
     function openModal(modalId, documentId) {
