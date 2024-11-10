@@ -9,7 +9,7 @@ if ($_SESSION['role'] !== 'Student') {
 
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT * FROM Document_Repository WHERE student_id = ?";
+$sql = "SELECT * FROM Document_Repository WHERE student_id = ? AND status != 'LostDoc'";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();

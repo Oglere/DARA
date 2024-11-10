@@ -224,8 +224,8 @@
                                             echo "
                                                 <span class='date' style='margin-left: 20px; color: black;'> Date Abandoned: &nbsp;</span>
                                                 <div class='datete' style='color: black;'>" .
-                                                    htmlspecialchars(date('M d, Y', strtotime($row['date_reviewed']))) . " at " .
-                                                    htmlspecialchars(date('h:i A', strtotime($row['date_reviewed']))) .
+                                                    htmlspecialchars(date('M d, Y', strtotime($row['date_submitted']))) . " at " .
+                                                    htmlspecialchars(date('h:i A', strtotime($row['abandoned_date']))) .
                                                 "</div>";
                                         }
                                     ?>
@@ -236,6 +236,53 @@
                                         if ($row['status'] == "Pending") {
                                             echo '
                                             <button class="btn abandon" onclick="openModal(\'abandonModal\', ' . $row['document_id'] . ')">
+                                            
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="15"
+                                                    height="15"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="feather feather-trash"
+                                                    >
+                                                    <polyline points="3 6 5 6 21 6" />
+                                                    <path
+                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                                                    />
+                                                </svg>
+
+                                            </button>
+                                            ';
+                                        } elseif ($row['status'] == "Abandoned") {
+                                            echo '
+                                            <button class="btn recover" onclick="openModal(\'recoverModal\', ' . $row['document_id'] . ')">
+                                            
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="15"
+                                                    height="15"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="feather feather-refresh-cw"
+                                                    >
+                                                    <polyline points="23 4 23 10 17 10" />
+                                                    <polyline points="1 20 1 14 7 14" />
+                                                    <path
+                                                        d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
+                                                    />
+                                                </svg>
+
+                                            </button>
+
+                                            <button class="btn removeperm" onclick="openModal(\'removepermModal\', ' . $row['document_id'] . ')">
                                             
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -274,11 +321,12 @@
 
 <div id="abandonModal" class="modal">
     <div class="modal-content">
-        <h2>Abandon Document</h2>
-        <p>Are you sure you want to abandon this document? <br> You can still recover this document later.</p>
+        <h2>Are you sure you want to abandon this document?</h2>
+        <p>You can still recover this document later.</p>
         <div class="modal-actions">
-            <form action="../../controls/student/abandon_document.php" method="POST">
-                <input type="hidden" name="document_id" id="documentIdInput">
+            <form action="../../controls/student/document_action.php" method="POST">
+                <input type="hidden" name="document_id" class="documentIdInput">
+                <input type="hidden" name="action" value="abandon">
                 <button type="submit" class="batan confirm">Confirm</button>
                 <button type="button" class="batan cancel" onclick="closeModal('abandonModal')">Cancel</button>
             </form>
@@ -286,20 +334,57 @@
     </div>
 </div>
 
+<div id="recoverModal" class="modal">
+    <div class="modal-content">
+        <h2>Recover this document?</h2>
+        <div class="modal-actions">
+            <form action="../../controls/student/document_action.php" method="POST">
+                <input type="hidden" name="document_id" class="documentIdInput">
+                <input type="hidden" name="action" value="recover">
+                <button type="submit" class="batan confirm">Confirm</button>
+                <button type="button" class="batan cancel" onclick="closeModal('recoverModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="removepermModal" class="modal">
+    <div class="modal-content">
+        <h2>Are you sure you want to delete this document permanently?</h2>
+        <p>You cannot recover this document if you delete it permanently.</p>
+        <div class="modal-actions">
+            <form action="../../controls/student/document_action.php" method="POST">
+                <input type="hidden" name="document_id" class="documentIdInput">
+                <input type="hidden" name="action" value="delete">
+                <button type="submit" class="batan confirm">Confirm</button>
+                <button type="button" class="batan cancel" onclick="closeModal('removepermModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     function openModal(modalId, documentId) {
-        document.getElementById(modalId).style.display = "block";
-        document.getElementById('documentIdInput').value = documentId;
+        const modal = document.getElementById(modalId);
+        modal.style.display = "block";
+
+        // Set document ID only
+        modal.querySelector('[name="document_id"]').value = documentId;
     }
 
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = "none";
     }
 
+    // Close modal if clicking outside of it
     window.onclick = function(event) {
-        const modal = document.getElementById('abandonModal');
-        if (event.target === modal) {
-            closeModal('abandonModal');
-        }
+        const modals = ['abandonModal', 'recoverModal', 'removepermModal'];
+        modals.forEach(modalId => {
+            const modal = document.getElementById(modalId);
+            if (event.target === modal) {
+                closeModal(modalId);
+            }
+        });
     };
 </script>
+

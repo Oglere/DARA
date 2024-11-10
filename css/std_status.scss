@@ -55,21 +55,28 @@
           padding: 5px 10px;
           border: none;
           border-radius: 5px;
-          color: #ffffff;
           cursor: pointer;
+          color: white;
+          height: 25px;
+          width: 40px;
         }
 
         .review {
           background-color: #007bff;
         }
 
-        .edit {
-          background-color: #ffc107;
-          color: #000;
-        }
-
         .abandon {
           background-color: #dc35459e;
+          margin-top: 5px;
+        }
+
+        .recover {
+          background-color: #6aaa51;
+          margin-top: 5px;
+        }
+
+        .removeperm {
+          background-color: #8e0404;
           margin-top: 5px;
         }
       }
@@ -117,7 +124,7 @@
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 500px;
+  max-width: 400px;
   border-radius: 10px;
 }
 
