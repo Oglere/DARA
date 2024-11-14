@@ -8,10 +8,6 @@ if ($_SESSION['role'] !== 'Teacher') {
 }
 ?>
 
-<script>
-    history.pushState();
-</script>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +15,7 @@ if ($_SESSION['role'] !== 'Teacher') {
     <link rel="stylesheet" href="../../css/std.scss">
     <link rel="stylesheet" href="../../css/mainpage.scss">
     <link rel="stylesheet" href="../../css/std_control.scss">
+    <link rel="stylesheet" href="../../css/tch.pdf.scss">
 </head>
 <body>
     <main>
@@ -28,7 +25,7 @@ if ($_SESSION['role'] !== 'Teacher') {
             </div>
         </header>
          
-        <div class="main" style="height: 100%;">
+        <div class="main" style="height: calc(100% - 121px);">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
@@ -107,7 +104,7 @@ if ($_SESSION['role'] !== 'Teacher') {
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="../view/logout.php" class="../view/logout-btn"> 
+                    <a href="../../view/logout.php" class="../view/logout-btn"> 
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -145,4 +142,3 @@ if ($_SESSION['role'] !== 'Teacher') {
     </main>
 </body>
 </html>
-<script src="js/index.js"></script>

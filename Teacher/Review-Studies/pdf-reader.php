@@ -2,12 +2,6 @@
 include '../../db/db.php';
 session_start();
 
-if ($_SESSION['role'] !== 'Teacher') {
-    header('Location: ../../view/login.php');
-    exit();
-}
-
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -16,19 +10,47 @@ if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
     exit();
 }
 
-$document_id = intval($_GET['id']);
+if ($_SESSION['role'] !== 'Teacher' || !isset($_SESSION['user_id'])) {
+    header('Location: ../../view/login.php');
+    exit();
+}
 
-$sql = "SELECT title, metadata, file FROM Document_Repository WHERE document_id = ?";
+$document_id = intval($_GET['id']);
+$stadid = $_SESSION['user_id'];
+
+$sql = "SELECT * FROM Document_Repository WHERE document_id = ? AND teacher_id = ?";
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
     die('Prepare failed: ' . htmlspecialchars($conn->error));
 }
-$stmt->bind_param("i", $document_id);
+
+$stmt->bind_param("ii", $document_id, $stadid);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    echo "Document not found.";
+    $check_sql = "SELECT document_id FROM Document_Repository WHERE document_id = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    if ($check_stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
+
+    $check_stmt->bind_param("i", $document_id);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+
+    if ($check_result->num_rows === 0) {
+        echo "Empty document.";
+    } else {
+        echo "
+        <script> 
+            alert('Document not yours.'); 
+            window.location = '../document-status';
+        </script>
+        ";
+
+    }
+
     exit();
 }
 
@@ -37,19 +59,15 @@ $pdf_data = $row['file'];
 $title = htmlspecialchars($row['title']);
 
 $metadata = json_decode($row['metadata'], true);
-
 if (json_last_error() !== JSON_ERROR_NONE) {
     die('Error decoding JSON metadata: ' . json_last_error_msg());
 }
 
 $abstract = htmlspecialchars($metadata['abstract'] ?? '');
 $publication_date = htmlspecialchars($metadata['publication_date'] ?? '');
-$keywords = json_decode($metadata['keywords'] ?? '[]', true);
-?>
 
-<script>
-    history.pushState();
-</script>
+$keywords = is_array($metadata['keywords']) ? $metadata['keywords'] : [];
+?>
 
 <html lang="en">
 <head>
@@ -58,7 +76,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
     <link rel="stylesheet" href="../../css/std.scss">
     <link rel="stylesheet" href="../../css/mainpage.scss">
     <link rel="stylesheet" href="../../css/std_control.scss">
-    <link rel="stylesheet" href="../../css/tch.pdf.scss">
+    <link rel="stylesheet" href="../../css/std.pdf.scss">
 </head>
 <body>
     <main>
@@ -66,9 +84,12 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
             <div class="ahh">
                 <img src="../../Imgs/DARA.png" alt="">
             </div>
+            <?php 
+                include "../../controls/pdf_identification.php"; 
+            ?>
         </header>
          
-        <div class="main" style="height: calc(100% - 161px); overflow: hidden;">
+        <div class="main" style="height: calc(100% - 122px); overflow: hidden;">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2> <!-- Display student's username -->
@@ -76,7 +97,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
                 </div>
 
                 <nav class="nav-links">
-                    <a href="../" style="color: #04128e; font-weight: normal;"> 
+                    <a href="../"> 
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"

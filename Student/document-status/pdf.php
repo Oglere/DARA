@@ -15,10 +15,8 @@ include '../../db/db.php';
                     <p>Total Pages: <span id="total-pages"></span></p>
                 </div>
 
-                <h2>Document Metadata</h2>
-                <p><strong>Title:</strong> <?= htmlspecialchars($title) ?></p>
-                <p><strong>Abstract:</strong> <?= htmlspecialchars($abstract) ?></p>
-                <p><strong>Publication Date:</strong> <?= htmlspecialchars($publication_date) ?></p>
+                <h2><?= htmlspecialchars($title) ?></h2>
+                <p><strong>Date Submitted</strong> <?= htmlspecialchars($publication_date) ?></p>
                 <p><strong>Keywords:</strong> 
                     <?php 
                     if (is_array($keywords) && !empty($keywords)) {

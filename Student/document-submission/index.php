@@ -3,10 +3,11 @@ include '../../db/db.php';
 session_start();
 
 if (!$_SESSION) {
-    header('Location: Location: ../../view/login.php');
+    header('Location: ../../view/login.php');
     exit();
 }
 
+// Fetch teachers for dropdown
 $sql = "SELECT user_id, CONCAT(first_name, ' ', last_name) AS name FROM users WHERE role = 'Teacher'";
 $result = $conn->query($sql);
 $teachers = $result->fetch_all(MYSQLI_ASSOC);
@@ -18,9 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $publication_date = $_POST['publication_date'];
     $keywords = json_encode(explode(',', $_POST['keywords']));
     $citations = json_encode(explode(',', $_POST['citations']));
-    $metadata = json_encode(['abstract' => $abstract, 'publication_date' => $publication_date, 'keywords' => $keywords]);
+    $metadata = json_encode([
+        'abstract' => $abstract,
+        'publication_date' => $publication_date,
+        'keywords' => $keywords
+    ]);
     $student_id = $_SESSION['user_id'];
     $teacher_id = $_POST['teacher_id'];
+    $document_types = json_encode($_POST['document_types']); // Convert document types to JSON
 
     if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $pdf = file_get_contents($_FILES['file']['tmp_name']);
@@ -29,48 +35,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $sql = "INSERT INTO document_repository (title, student_id, teacher_id, authors, citations, metadata, file, status, date_submitted) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', NOW())";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sisssss", $title, $student_id, $teacher_id, $co_authors, $citations, $metadata, $pdf);
+    // Prepare SQL statement
+    $sql = "INSERT INTO document_repository 
+            (title, student_id, teacher_id, authors, citations, metadata, file, status, date_submitted, study_type) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending', NOW(), ?)";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bind_param("sissssss", $title, $student_id, $teacher_id, $co_authors, $citations, $metadata, $pdf, $document_types);
 
     if ($stmt->execute()) {
-
         echo "
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const frbg = document.querySelector('.frbg');
 
-                    // Set initial visibility to hidden for the fade-in effect on refresh
                     frbg.style.visibility = 'hidden';
-
-                    // Delay to trigger the fade-in effect after the page refreshes
                     setTimeout(() => {
-                        // Add fade-in class for smooth appearance
                         frbg.classList.add('fade-in');
                         frbg.style.visibility = 'visible';
-                    }, 100); // Short delay to trigger visibility change
+                    }, 100);
 
-                    // Remove fade-in after 2 seconds and add fade-out class
                     setTimeout(() => {
                         frbg.classList.remove('fade-in');
                         frbg.classList.add('fade-out');
                     }, 2000);
 
-                    // Hide element after fade-out completes
                     setTimeout(() => {
                         frbg.style.visibility = 'hidden';
                         frbg.classList.remove('fade-out');
                     }, 2500);
                 });
             </script>
-
         ";
     } else {
         echo "Error: " . $stmt->error;
     }
 }
-
 ?>
+
 
 <html lang="en">
 <head>

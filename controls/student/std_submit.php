@@ -1,5 +1,5 @@
 <h1 style="font-weight: lighter;">SUBMIT A DOCUMENT</h1>
-<form method="post" enctype="multipart/form-data">
+<form id="documentForm" method="post" enctype="multipart/form-data">
     Title: <input type="text" name="title" required><br>
     Abstract: <textarea name="abstract" required></textarea><br>
     Co-Authors (comma-separated): <input type="text" name="co_authors"><br>
@@ -51,20 +51,39 @@
             <label>System Studies</label>
         </div>
     </div>
-    <button type="submit" onClick="submit();">Submit</button>
+    <button type="submit" id="submitButton" disabled>Submit</button>
 </form>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
     const chooseFileBtn = document.getElementById("chooseFileBtn");
     const inputFile = document.getElementById("fileID");
     const fileNameDisplay = document.getElementById("fileNameDisplay");
+    const submitButton = document.getElementById("submitButton");
 
     chooseFileBtn.addEventListener("click", () => {
-        inputFile.click();
+        inputFile.click(); 
     });
 
     inputFile.addEventListener("change", function () {
-        const fileName = this.files[0].name;
-        fileNameDisplay.textContent = `Selected file: ${fileName}`;
+        const file = this.files[0];
+        if (file && file.type === "application/pdf") {
+            fileNameDisplay.textContent = `Selected file: ${file.name}`;
+            submitButton.disabled = false; // Enable submit button if PDF
+        } else {
+            alert("Error: Only PDF files are allowed.");
+            fileNameDisplay.textContent = "No valid file selected";
+            this.value = ""; // Clear the file input
+            submitButton.disabled = true; // Disable submit button
+        }
     });
+
+    document.getElementById("documentForm").addEventListener("submit", function (event) {
+        if (!inputFile.files[0] || inputFile.files[0].type !== "application/pdf") {
+            event.preventDefault();
+            alert("Please upload a valid PDF file.");
+        }
+    });
+});
+
 </script>
