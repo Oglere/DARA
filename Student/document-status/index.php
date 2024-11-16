@@ -29,7 +29,7 @@ $result = $stmt->get_result();
     <main>
         <header> 
             <div class="ahh">
-                <img src="../../Imgs/DARA.png" alt="" style="height: 50px;">
+                <img src="../../Imgs/DARA.png" alt="" style="height: 40px;">
             </div>
         </header>
          

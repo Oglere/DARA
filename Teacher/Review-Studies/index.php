@@ -21,7 +21,7 @@ if ($_SESSION['role'] !== 'Teacher') {
     <main>
         <header> 
             <div class="ahh">
-                <img src="../../Imgs/DARA.png" alt="">
+                <img src="../../Imgs/DARA.png" alt="" class="ahh">
             </div>
         </header>
          
@@ -98,7 +98,7 @@ if ($_SESSION['role'] !== 'Teacher') {
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="../" class="unq">Search Studies</a>
+                    <a href="../../" class="unq">Search Studies</a>
 
                     <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>

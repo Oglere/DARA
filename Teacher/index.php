@@ -41,7 +41,7 @@ $data = $result->fetch_assoc();
     <main>
         <header> 
             <div class="ahh">
-                <img src="../Imgs/DARA.png" alt="">
+                <img src="../Imgs/DARA.png" alt="" class="ahh">
             </div>
         </header>
          

@@ -40,129 +40,123 @@ $publication_date = htmlspecialchars($metadata['publication_date'] ?? '');
 $keywords = json_decode($metadata['keywords'] ?? '[]', true);
 ?>
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DARA - <?= $title ?></title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-        }
-        main {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        nav {
-            opacity: 0;
-            width: 200px;
-            background: #f4f4f4;
-            padding: 15px;
-        }
-        .contents {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            background-color: #fff;
-        }
-        aside {
-            width: 300px;
-            background: #f4f4f4;
-            padding: 15px;
-        }
-        #pdf-container {
-            height: 100%;
-            overflow-y: scroll;
-            border: 1px solid #ccc;
-        }
-        .page {
-            margin: 10px 0;
-            page-break-before: always;
-        }
-        canvas {
-            display: block;
-            width: 100%;
-        }
-    </style>
+    <title>DARA - Read: <?= $title ?></title>
+    <link rel="stylesheet" href="../css/results.scss">
+    <link rel="stylesheet" href="../css/std.scss">
+    <link rel="stylesheet" href="../css/mainpage.scss">
+    <link rel="stylesheet" href="../css/std_control.scss">
+    <link rel="stylesheet" href="../css/std.pdf.scss">
 </head>
 <body>
     <main>
-        <nav>
-            <p>Page <span id="current-page">1</span> of <span id="total-pages"></span></p>
-        </nav>
-        <div class="contents">
-            <div id="pdf-container"></div>
-        </div>
-        <aside>
-            <h2>Document Metadata</h2>
-            <p><strong>Title:</strong> <?= $title ?></p>
-            <p><strong>Abstract:</strong> <?= $abstract ?></p>
-            <p><strong>Publication Date:</strong> <?= $publication_date ?></p>
-            <p><strong>Keywords:</strong> 
-                <?php 
-                if (is_array($keywords) && !empty($keywords)) {
-                    echo implode(", ", $keywords) . ".";
+        <header>
+            <?php 
+                session_start();
+                if (isset($_SESSION['role']) && $_SESSION['role'] == "Teacher") {
+                    echo '
+                    <a href="../teacher/">
+                        <div class="loginbutton">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-user"
+                        >
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+
+                        <h4>&nbsp' . htmlspecialchars($_SESSION['first_name']) .' </h4>
+                        </div>
+                    </a>
+                    ';
+                } elseif (isset($_SESSION['role']) && $_SESSION['role'] == "Student") {
+                    echo '
+                    <a href="../student/">
+                        <div class="loginbutton">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-user"
+                            >
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                            </svg>
+
+                            <h4>&nbsp' . htmlspecialchars($_SESSION['first_name']) .' </h4>
+                        </div>
+                    </a>
+                    ';
                 } else {
-                    echo "No keywords available.";
+                    echo '
+                    <a class="death" href="../view/login.php">
+                        <div class="loginbutton">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-log-in"
+                            >
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                                <polyline points="10 17 15 12 10 7" />
+                                <line x1="15" y1="12" x2="3" y2="12" />
+                            </svg>
+                            <h4> &nbsp Login</h4>
+                        </div>
+                    </a>';
                 }
                 ?>
-            </p>
+            
+            <div class="ahh">
+                    <a href="/dara" class="help">
+                        <img src="../Imgs/DARA.png" alt="" style="height: 25px;">
+                    </a>
+                <?php 
+                    include "../controls/search material/search_bar.php";
+                ?>
+            </div>
+        </header>
+         
+        <div class="main" style="height: calc(100% - 122px); overflow: hidden;">
 
-        </aside>
+                <div class="left" style="border: none;"></div>
+ 
+            <div class="right" style="overflow: auto;">
+
+                <?php include "pdf.php" ?>
+
+            </div>
+        </div>
+
+        <footer>
+            <a href="#">About DARA</a>
+            <p>&nbsp | &nbsp</p>
+            <a href="#">Contact us</a>
+        </footer>
     </main>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
-
-        const url = 'data:application/pdf;base64,<?= base64_encode($pdf_data) ?>';
-        let pdfDoc = null,
-            pageNum = 1,
-            scale = 1.5;
-
-        const container = document.getElementById('pdf-container');
-
-        pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-            pdfDoc = pdfDoc_;
-            document.getElementById('total-pages').textContent = pdfDoc.numPages;
-            renderAllPages();
-        }).catch(function(error) {
-            console.error('Error loading PDF:', error);
-        });
-
-        function renderAllPages() {
-            for (let i = 1; i <= pdfDoc.numPages; i++) {
-                renderPage(i);
-            }
-        }
-
-        function renderPage(num) {
-            pdfDoc.getPage(num).then(function(page) {
-                const viewport = page.getViewport({scale: scale});
-                const canvas = document.createElement('canvas');
-                canvas.className = 'page';
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                container.appendChild(canvas);
-
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                page.render(renderContext).promise.then(function() {
-                    document.getElementById('current-page').textContent = num;
-                });
-            }).catch(function(error) {
-                console.error('Error rendering page:', error);
-            });
-        }
-    </script>
 </body>
 </html>
+<script src="js/index.js"></script>
 

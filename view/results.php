@@ -92,7 +92,9 @@
                 ?>
             
             <div class="ahh">
-                <a class="help" href="../">D A R A</a>
+                    <a href="/dara" class="help">
+                        <img src="../Imgs/DARA.png" alt="" style="height: 25px;">
+                    </a>
                 <?php 
                     include "../controls/search material/search_bar.php";
                 ?>

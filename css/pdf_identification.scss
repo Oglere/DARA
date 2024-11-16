@@ -5,11 +5,23 @@ form {
   justify-content: space-between;
 }
 
-.btn {
-  border-radius: 49px;
+.hellneh {
   position: absolute;
   margin-top: 140px;
   margin-right: 40px;
+  width: 175px;
+  display: flex;
+  border: none;
+  align-items: center;
+  font-family: "rubik";
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 80px;
+}
+
+.btn {
+  margin-top: 10px;
+  border-radius: 49px;
   width: 175px;
   font-weight: lighter;
   height: 40px;
@@ -19,9 +31,9 @@ form {
   transition: all 0.1s ease;
   align-items: center;
   font-family: "rubik";
-  justify-content: center;
-  background-color: #8e0404;
+  background-color: #04128e;
   color: white;
+  padding-left: 20px;
 }
 
 .batan {
@@ -40,6 +52,12 @@ form {
 }
 
 .btn:hover {
+  box-shadow: 3px 3px 4px #7b7b7b, -3px -3px 4px #ffffff;
+  color: white;
+  font-weight: normal;
+}
+
+.asd:hover {
   box-shadow: 3px 3px 4px #7b7b7b, -3px -3px 4px #ffffff;
   color: white;
   font-weight: normal;

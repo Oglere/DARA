@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <main>
         <header> 
             <div class="ahh">
-                <img src="../../Imgs/DARA.png" alt="" style="height: 50px;">
+                <img src="../../Imgs/DARA.png" alt="" class="ahh">
             </div>
         </header>
         
