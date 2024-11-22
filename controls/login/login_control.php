@@ -28,6 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Refresh: 0");
         } elseif ($user['role'] == 'Teacher') {
             header('Location: ../teacher');
+        } elseif ($user['role'] == 'Admin') {
+            header('Location: ../Admin');
         }
         exit();
     } else {

@@ -76,7 +76,7 @@ $keywords = is_array($metadata['keywords']) ? $metadata['keywords'] : [];
 
 <script>
     history.pushState();
-</script>
+</script> 
 
 <html lang="en">
 <head>

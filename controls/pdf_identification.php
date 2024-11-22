@@ -75,6 +75,7 @@ if ($_SESSION['role'] == "Teacher") {
             <button class="asd"
                 id="abandonBtn"
                 style="
+                    background-color: #8e0404;
                     border-radius: 49px;
                     position: absolute;
                     margin-top: 140px;
@@ -87,10 +88,9 @@ if ($_SESSION['role'] == "Teacher") {
                     cursor: pointer;
                     transition: all 0.1s ease;
                     align-items: center;
-                    font-family: "rubik";
                     justify-content: center;
-                    background-color: #8e0404;
                     color: white;
+                    font-family: `rubik`;
                 ">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
