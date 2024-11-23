@@ -15,7 +15,7 @@
     Citations (comma-separated): <input type="text" name="citations"><br>
 
     <div class="container">
-        <div class="card">
+        <div class="card"> 
             <h3>Upload File</h3>
             <div class="drop_box">
                 <div class="header">
@@ -69,12 +69,12 @@
         const file = this.files[0];
         if (file && file.type === "application/pdf") {
             fileNameDisplay.textContent = `Selected file: ${file.name}`;
-            submitButton.disabled = false; // Enable submit button if PDF
+            submitButton.disabled = false;
         } else {
             alert("Error: Only PDF files are allowed.");
             fileNameDisplay.textContent = "No valid file selected";
-            this.value = ""; // Clear the file input
-            submitButton.disabled = true; // Disable submit button
+            this.value = "";
+            submitButton.disabled = true;
         }
     });
 

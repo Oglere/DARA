@@ -278,6 +278,11 @@ if ($_SESSION['role'] !== 'Admin') {
         font-family: "rubik";
         justify-content: center;
     }
+
+    .suloda {
+        height: 200px;
+        overflow: auto;
+    }
 </style>
 
 
@@ -290,6 +295,7 @@ if ($_SESSION['role'] !== 'Admin') {
     <link rel="stylesheet" href="../../css/std.scss">
     <link rel="stylesheet" href="../../css/mainpage.scss">
     <link rel="stylesheet" href="../../css/std_control.scss">
+    <link rel="stylesheet" href="../../css/yey.scss">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -359,6 +365,7 @@ if ($_SESSION['role'] !== 'Admin') {
                     <div class="divider"></div>
 
                     <a href="../../" class="unq">Search Studies</a>
+                    <a href="../../" class="unq">Edit Account</a>
 
                     <div class="divider"></div>
                     <a href="../../view/logout.php" class="logout-btn">
@@ -373,28 +380,54 @@ if ($_SESSION['role'] !== 'Admin') {
             </div>
 
             <div class="right" style="overflow: auto; padding: 20px;">
+                <div class="frbg">
+                    <div class="notif">
+                        <div class="imghere">
+                            <img src="../../imgs/review.png" alt="" />
+                        </div>
+                        <div
+                            class="teksto"
+                            style="display: flex; margin-top: -16px; text-align: center"
+                        >
+                            <p>
+                            Submitted <br />
+                            Succesfully!
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div id="add-user-form" class="hidden">
                     <h2>Add New User</h2>
-                    <form id="user-form">
-                        <div class="form-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" name="first_name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="last-name">Last Name</label>
-                            <input type="text" id="last-name" name="last_name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="role">Role</label>
-                            <select id="role" name="role" required>
-                                <option value="Admin">Admin</option>
-                                <option value="Teacher">Teacher</option>
-                                <option value="Student">Student</option>
-                            </select>
+                    <form id="user-form" method="post" action="../../controls/admin/useradd.php">
+                        <div class="suloda">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" name="first_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" name="last_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Username">Username</label>
+                                <input type="text" id="Username" name="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password</label>
+                                <input type="text" id="pass" name="pass" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select id="role" name="role" required>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Student">Student</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="botoning">
                             <button type="submit" class="sab">Add</button>
@@ -450,21 +483,34 @@ if ($_SESSION['role'] !== 'Admin') {
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT * FROM users";
-                            $result = mysqli_query($conn, $query);
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr>
-                                    <td>" . htmlspecialchars($row['user_id']) . "</td>
-                                    <td>" . htmlspecialchars($row['first_name']) . "</td>
-                                    <td>" . htmlspecialchars($row['last_name']) . "</td>
-                                    <td>" . htmlspecialchars($row['email']) . "</td>
-                                    <td>" . htmlspecialchars($row['role']) . "</td>
-                                    <td>
-                                        <button class='edit-btn' data-id='" . $row['user_id'] . "'>Edit</button>
-                                        <button class='delete-btn' data-id='" . $row['user_id'] . "'>Delete</button>
-                                    </td>
-                                </tr>";
+                            $admin = $_SESSION['user_id'];
+                            $query = "SELECT * FROM users WHERE user_id != ?";
+                            $stmt = mysqli_prepare($conn, $query);
+                            
+                            if ($stmt) {
+                                mysqli_stmt_bind_param($stmt, "i", $admin);
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
+                            
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<tr>
+                                        <td>" . htmlspecialchars($row['user_id']) . "</td>
+                                        <td>" . htmlspecialchars($row['first_name']) . "</td>
+                                        <td>" . htmlspecialchars($row['last_name']) . "</td>
+                                        <td>" . htmlspecialchars($row['email']) . "</td>
+                                        <td>" . htmlspecialchars($row['role']) . "</td>
+                                        <td>
+                                            <button class='edit-btn' data-id='" . htmlspecialchars($row['user_id']) . "'>Edit</button>
+                                            <button class='delete-btn' data-id='" . htmlspecialchars($row['user_id']) . "'>Delete</button>
+                                        </td>
+                                    </tr>";
+                                }
+                            
+                                mysqli_stmt_close($stmt);
+                            } else {
+                                echo "Error preparing the statement: " . mysqli_error($conn);
                             }
+                            
                             ?>
                         </tbody>
                     </table>
@@ -483,92 +529,4 @@ if ($_SESSION['role'] !== 'Admin') {
 </body>
 </html>
 
-<script>
-document.getElementById('add-user-btn').addEventListener('click', () => {
-    document.getElementById('add-user-form').classList.remove('hidden');
-    document.getElementById('user-list').classList.add('hidden');
-});
-
-document.getElementById('cancel-add').addEventListener('click', () => {
-    document.getElementById('add-user-form').classList.add('hidden');
-    document.getElementById('user-list').classList.remove('hidden');
-});
-
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        if (confirm('Are you sure you want to delete this user?')) {
-            const userId = button.getAttribute('data-id');
-            // Send AJAX request to delete user
-            // Add your PHP backend handling here
-        }
-    });
-});
-
-document.querySelectorAll('.filter-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const role = button.getAttribute('data-role');
-        filterUsers(role);
-        
-        // Update button styling
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.replace('btn-primary', 'btn-secondary'));
-        button.classList.replace('btn-secondary', 'btn-primary');
-    });
-});
-
-function filterUsers(role = 'all') {
-    const searchQuery = document.getElementById('search-bar').value.toLowerCase();
-    const rows = document.querySelectorAll('tbody tr');
-
-    rows.forEach(row => {
-        const name = row.children[1].textContent.toLowerCase() + ' ' + row.children[2].textContent.toLowerCase();
-        const email = row.children[3].textContent.toLowerCase();
-        const userRole = row.children[4].textContent;
-
-        const matchesSearch = name.includes(searchQuery) || email.includes(searchQuery);
-        const matchesRole = role === 'all' || userRole === role;
-
-        row.style.display = matchesSearch && matchesRole ? '' : 'none';
-    });
-}
-
-// Toggle Add User Modal
-document.getElementById('add-user-btn').addEventListener('click', () => {
-    document.getElementById('add-user-form').classList.remove('hidden');
-    document.querySelector('.overlay').classList.remove('hidden');
-});
-
-document.getElementById('cancel-add').addEventListener('click', () => {
-    document.getElementById('add-user-form').classList.add('hidden');
-    document.querySelector('.overlay').classList.add('hidden');
-});
-
-// Filter and Search
-document.querySelectorAll('.filter-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const role = button.getAttribute('data-role');
-        filterUsers(role);
-
-        // Update button styles
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.replace('btn-primary', 'btn-secondary'));
-        button.classList.replace('btn-secondary', 'btn-primary');
-    });
-});
-
-function filterUsers(role = 'all') {
-    const searchQuery = document.getElementById('search-bar').value.toLowerCase();
-    const rows = document.querySelectorAll('tbody tr');
-
-    rows.forEach(row => {
-        const name = row.children[1].textContent.toLowerCase() + ' ' + row.children[2].textContent.toLowerCase();
-        const email = row.children[3].textContent.toLowerCase();
-        const userRole = row.children[4].textContent;
-
-        const matchesSearch = name.includes(searchQuery) || email.includes(searchQuery);
-        const matchesRole = role === 'all' || userRole === role;
-
-        row.style.display = matchesSearch && matchesRole ? '' : 'none';
-    });
-}
-
-</script>
-
+<script src="../../js/usercontrol.js"> </script>

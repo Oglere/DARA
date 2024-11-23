@@ -268,7 +268,10 @@ $recent_users_online_data = $conn->query("
                     </a>
 
                     <div class="divider"></div>
+
                     <a href="../" class="unq">Search Studies</a>
+                    <a href="../../" class="unq">Edit Account</a>
+                    
                     <div class="divider"></div>
                     <a href="../view/logout.php" class="logout-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in">
@@ -374,7 +377,7 @@ $recent_users_online_data = $conn->query("
                 labels: studyStatusData.map(item => item.status),
                 datasets: [{
                     data: studyStatusData.map(item => item.count),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8AFF64', '#FF9F40'],
+                    backgroundColor: ['#8e0404', '#04128e', '#FFCE56', '#8AFF64', '#FF9F40'],
                 }]
             },
             options: {
@@ -394,7 +397,7 @@ $recent_users_online_data = $conn->query("
                 datasets: [{
                     label: 'User Count',
                     data: userRolesData.map(item => item.count),
-                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#8AFF64', '#FF9F40'],
+                    backgroundColor: ['#04128e', '#8e0404', '#FFCE56', '#8AFF64', '#FF9F40'],
                 }]
             },
             options: {

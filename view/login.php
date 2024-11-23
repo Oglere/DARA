@@ -5,10 +5,6 @@
         header('Location: ../');
     }
 ?>
-<!-- <script>
-    window.history.forward();
-</script> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
