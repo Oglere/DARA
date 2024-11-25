@@ -116,9 +116,6 @@
         
 
         <footer>
-            <a href="#">About DARA</a>
-            <p>&nbsp | &nbsp</p>
-            <a href="#">Contact us</a>
         </footer>
     </main>
 </body>

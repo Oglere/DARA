@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </header>
         
-        <div class="main" style="height: calc(100% - 121px); overflow: hidden;">
+        <div class="main" style="height: 100%; overflow: hidden;">
             <div class="left">
                 <div class="profile">
                     <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>
@@ -218,9 +218,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <footer>
-            <a href="#">About DARA</a>
-            <p>&nbsp | &nbsp</p>
-            <a href="#">Contact us</a>
         </footer>
     </main>
 </body>

@@ -70,7 +70,6 @@
                 </div>
                 <div class="ubos">
                     <button type="submit">L O G I N</button>
-                    <a href="request">Forgot password?</a>
                 </div>
             </form>
             <?php if (isset($error)): ?> 
@@ -78,9 +77,6 @@
             <?php endif; ?>
         </div>
         <footer>
-            <a href="#">About DARA</a>
-            <p>&nbsp | &nbsp</p>
-            <a href="#">Contact us</a>
         </footer>
     </main>
 </body>

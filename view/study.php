@@ -139,7 +139,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
             </div>
         </header>
          
-        <div class="main" style="height: calc(100% - 122px); overflow: hidden;">
+        <div class="main" style="height: 100%; overflow: hidden;">
 
                 <div class="left" style="border: none;"></div>
  
@@ -151,9 +151,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
         </div>
 
         <footer>
-            <a href="#">About DARA</a>
-            <p>&nbsp | &nbsp</p>
-            <a href="#">Contact us</a>
+            
         </footer>
     </main>
 </body>

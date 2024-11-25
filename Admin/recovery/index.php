@@ -29,7 +29,7 @@ if ($_SESSION && $_SESSION['role'] !== 'Admin') {
                 </div>
             </header>
 
-            <div class="main" style="height: calc(100% - 121px);">
+            <div class="main" style="height: 100%;">
                 <div class="left">
                     <div class="profile">
                         <h2><?php echo htmlspecialchars($_SESSION['first_name']); ?></h2>
@@ -237,9 +237,6 @@ if ($_SESSION && $_SESSION['role'] !== 'Admin') {
             </div>
         </div>
             <footer>
-                <a href="#">About DARA</a>
-                <p>&nbsp;|&nbsp;</p>
-                <a href="#">Contact us</a>
             </footer>
         </main>
     </body>
