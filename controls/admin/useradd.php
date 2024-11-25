@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="../../css/yey.scss">
 
 <?php
@@ -7,38 +6,41 @@ require '../../db/db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = htmlspecialchars(trim($_POST['first_name']));
     $last_name = htmlspecialchars(trim($_POST['last_name']));
-    $username = htmlspecialchars(trim($_POST['Username']));
+    $username = trim(strtolower($_POST['Username']));
     $password = password_hash(trim($_POST['pass']), PASSWORD_BCRYPT); 
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $role = htmlspecialchars(trim($_POST['role']));
+    $stat = "Active";
 
     if (!empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($username)) {
+        // Check if the username already exists
         $check_query = "SELECT COUNT(*) AS count FROM users WHERE usn = ?";
-        $check_stmt = mysqli_prepare($conn, $check_query);
+        $check_stmt = $conn->prepare($check_query);
 
-        if ($check_stmt) {
-            mysqli_stmt_bind_param($check_stmt, "s", $username);
-            mysqli_stmt_execute($check_stmt);
-            mysqli_stmt_bind_result($check_stmt, $count);
-            mysqli_stmt_fetch($check_stmt);
-            mysqli_stmt_close($check_stmt);
-
-            if ($count > 0) {
-                echo "Error: Username already exists. Please choose a different username.";
-                exit(); 
-            }
-        } else {
-            echo "Error: Could not prepare the statement: " . mysqli_error($conn);
-            exit(); 
+        if (!$check_stmt) {
+            die("Error: Could not prepare check statement: " . $conn->error);
         }
 
-        $query = "INSERT INTO users (first_name, last_name, usn, password_hash, email, role) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_prepare($conn, $query);
+        $check_stmt->bind_param("s", $username);
+        $check_stmt->execute();
+        $check_stmt->bind_result($count);
+        $check_stmt->fetch();
+        $check_stmt->close();
 
-        if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "ssssss", $first_name, $last_name, $username, $password, $email, $role);
+        if ($count > 0) {
+            echo "Error: Username already exists. Please choose a different username. " . $count . "";
+        } else {
+            // Insert the new user into the database
+            $insert_query = "INSERT INTO users (first_name, last_name, usn, password_hash, email, role, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $insert_stmt = $conn->prepare($insert_query);
 
-            if (mysqli_stmt_execute($stmt)) {
+            if (!$insert_stmt) {
+                die("Error: Could not prepare insert statement: " . $conn->error);
+            }
+
+            $insert_stmt->bind_param("sssssss", $first_name, $last_name, $username, $password, $email, $role, $stat);
+
+            if ($insert_stmt->execute()) {
                 echo "
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
@@ -61,17 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 window.location.href = '../../admin/user-control';
                             }, 2500);
                         });
-
-                        window.location('../../admin/user-control');
                     </script>
                 ";
             } else {
-                echo "Error: Could not execute the query: " . mysqli_error($conn);
+                echo "Error: Could not execute the query: " . $insert_stmt->error;
             }
 
-            mysqli_stmt_close($stmt);
-        } else {
-            echo "Error: Could not prepare the statement: " . mysqli_error($conn);
+            $insert_stmt->close();
         }
     } else {
         echo "Invalid email or username.";
@@ -80,21 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Invalid request method.";
 }
 
-mysqli_close($conn);
+$conn->close();
 ?>
 
 <div class="frbg" style="width: 100%; height: 100%; display: flex; justify-content: center;">
     <div class="notif">
         <div class="imghere">
-            <img src="../../imgs/review.png" alt="" />
+            <img src="../../imgs/add-friend.png" alt="" />
         </div>
-        <div
-            class="teksto"
-            style="display: flex; margin-top: -16px; text-align: center"
-        >
+        <div class="teksto" style="display: flex; margin-top: -16px; text-align: center">
             <p>
-            Submitted <br />
-            Added!
+                Account <br />
+                Added!
             </p>
         </div>
     </div>

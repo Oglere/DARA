@@ -3,7 +3,7 @@
 include '../../db/db.php';
 session_start();
 
-if ($_SESSION['role'] !== 'Admin') {
+if ($_SESSION && $_SESSION['role'] !== 'Admin') {
     header('Location: ../../view/login.php');
     exit();
 }
@@ -55,7 +55,7 @@ if ($_SESSION['role'] !== 'Admin') {
 
                             Dashboard
                         </a>
-                        <a href="" style="color: #04128e; font-weight: normal;">
+                        <a href="../user-control">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -73,6 +73,7 @@ if ($_SESSION['role'] !== 'Admin') {
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                             </svg>
+
                             Manage Users
                         </a>
                         <a href="../messages">
@@ -103,9 +104,9 @@ if ($_SESSION['role'] !== 'Admin') {
 
                         <a href="../../" class="unq">Search Studies</a>
                         <a href="../edit" class="unq">Edit Account</a>
-                        <a href="../recovery" class="unq">Recovery</a>
+                        <a href="" style="color: #8e0404; font-weight: normal;" class="unq">Recovery</a>
 
-                        <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
+                        <div class="asd2" style=" width: 100%; 10px; display: flex; justify-content: center;">
                             <div class="asd3" style="border-bottom: 1px solid rgb(0, 0, 0, 0.2); width: 150px;"></div>
                         </div>
 
@@ -126,56 +127,14 @@ if ($_SESSION['role'] !== 'Admin') {
                                 <polyline points="10 17 15 12 10 7" />
                                 <line x1="15" y1="12" x2="3" y2="12" />
                             </svg>
-                            
+
                             Logout
                         </a>
                     </nav>
                 </div>
 
                 <div class="right" style="overflow: auto; padding: 20px;">
-                    
-                    <div id="add-user-form" class="hidden">
-                        <h2>Add New User</h2>
-                        <form id="user-form" method="post" action="../../controls/admin/useradd.php">
-                            <div class="suloda">
-                                <div class="form-group">
-                                    <label for="first-name">First Name</label>
-                                    <input type="text" id="first-name" name="first_name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="last-name">Last Name</label>
-                                    <input type="text" id="last-name" name="last_name" required>
-                                </div> 
-                                <div class="form-group">
-                                    <label for="Username">Username</label>
-                                    <input type="number" id="Username" name="Username" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pass">Password</label>
-                                    <input type="text" id="pass" name="pass" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" id="email" name="email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <select id="role" name="role" required>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Teacher">Teacher</option>
-                                        <option value="Student">Student</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="botoning">
-                                <button type="submit" class="sab">Add</button>
-                                <button type="button" class="nac" id="cancel-add">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="overlay hidden"></div>
-
-                    <div id="user-list">
+                    <div id="user-list" >
                         <div class="actions">
                             <div class="filter-group">
                                 <input type="text" id="search-bar" placeholder="Search users by name or email..." oninput="filterUsers()">
@@ -184,27 +143,6 @@ if ($_SESSION['role'] !== 'Admin') {
                                 <button class="btn-secondary filter-btn" data-role="Teacher">Teachers</button>
                                 <button class="btn-secondary filter-btn" data-role="Student">Students</button>
                             </div>
-                            <button id="add-user-btn" class="adda">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="22"
-                                    height="22"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="feather feather-user-plus"
-                                    >
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                    <circle cx="8.5" cy="7" r="4" />
-                                    <line x1="20" y1="8" x2="20" y2="14" />
-                                    <line x1="23" y1="11" x2="17" y2="11" />
-                                </svg>
-
-                                Add New User
-                            </button>
                         </div>
                         <table>
                             <thead>
@@ -221,11 +159,10 @@ if ($_SESSION['role'] !== 'Admin') {
                             <tbody>
                                 <?php
                                 $admin = $_SESSION['user_id'];
-                                $query = "SELECT * FROM users WHERE user_id != ? AND status != 'Deleted'";
+                                $query = "SELECT * FROM users WHERE status = 'Deleted'";
                                 $stmt = mysqli_prepare($conn, $query);
                                 
                                 if ($stmt) {
-                                    mysqli_stmt_bind_param($stmt, "i", $admin);
                                     mysqli_stmt_execute($stmt);
                                     $result = mysqli_stmt_get_result($stmt);
                             
@@ -234,7 +171,6 @@ if ($_SESSION['role'] !== 'Admin') {
                                         $users[] = $row;
                                     }
                             
-                                    // Loop through the $users array
                                     foreach ($users as $user) {
                                         if ($user['role'] == "Admin") {
                                             echo '<tr style="color: #8e0404;" data-id="' . htmlspecialchars($user['user_id']) . '">';
@@ -245,8 +181,7 @@ if ($_SESSION['role'] !== 'Admin') {
                                             echo '<td>' . htmlspecialchars($user['role']) . '</td>';
                                             echo '<td>' . htmlspecialchars($user['status']) . '</td>';
                                             echo '<td>
-                                                    <button class="edit-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Edit</button>
-                                                    <button class="delete-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Delete</button>
+                                                    <button class="recover-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Recover</button>
                                                 </td>';
                                             echo '</tr>';
                                         } elseif ($user['role'] == "Teacher") {
@@ -258,8 +193,7 @@ if ($_SESSION['role'] !== 'Admin') {
                                             echo '<td>' . htmlspecialchars($user['role']) . '</td>';
                                             echo '<td>' . htmlspecialchars($user['status']) . '</td>';
                                             echo '<td>
-                                                    <button class="edit-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Edit</button>
-                                                    <button class="delete-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Delete</button>
+                                                    <button class="recover-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Recover</button>
                                                 </td>';
                                             echo '</tr>';
                                         } else {
@@ -271,8 +205,7 @@ if ($_SESSION['role'] !== 'Admin') {
                                             echo '<td>' . htmlspecialchars($user['role']) . '</td>';
                                             echo '<td>' . htmlspecialchars($user['status']) . '</td>';
                                             echo '<td>
-                                                    <button class="edit-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Edit</button>
-                                                    <button class="delete-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Delete</button>
+                                                    <button class="recover-btn" data-id="' . htmlspecialchars($user['user_id']) . '">Recover</button>
                                                 </td>';
                                             echo '</tr>';
                                         }
@@ -288,45 +221,18 @@ if ($_SESSION['role'] !== 'Admin') {
                         </table>
                     </div>
 
-                    <div id="delete-modal" class="modal hidden">
+                    <div id="recover-modal" class="modal hidden">
                         <div class="modal-content">
-                            <h2>Confirm Deletion</h2>
-                            <p>Are you sure you want to delete this user?</p>
+                            <h2>Recover this account?</h2>
+                            <p>Are you sure you want to recover this user?</p>
                             <div class="botoning">
-                                <button type="submit" id="confirm-delete" class="sab">Delete</button>
+                                <button type="submit" id="confirm-recover" class="sab">Recover</button>
                                 <button id="cancel-delete" class="nac">Cancel</button>
                             </div>
                         </div>
                     </div>
-
-                    <div id="edit-modal" class="hidden tree">
-                        <form id="edit-user-form" class="asdasd" data-user-id="USER_ID_PLACEHOLDER">
-                            <label style="margin-bottom: 5px;" for="edit-fname">First Name</label>
-                            <input type="text" id="edit-fname" name="fname" required>
-                            <label style="margin-bottom: 5px;" for="edit-lname">Last Name</label>
-                            <input type="text" id="edit-lname" name="lname" required>
-                            <label style="margin-bottom: 5px;" for="edit-email">Email</label>
-                            <input type="email" id="edit-email" name="email" required>
-                            <label style="margin-bottom: 5px;" for="edit-password">Password (leave blank to keep current password)</label>
-                            <input id="edit-password" name="password">
-                            <label style="margin-bottom: 5px;" for="edit-role">Role</label>
-                            <select id="edit-role" name="role" required>
-                                <option value="Student">Student</option>
-                                <option value="Teacher">Teacher</option>
-                                <option value="Admin">Admin</option>
-                            </select>
-                            <label style="margin-bottom: 5px;" for="edit-status">Status</label>
-                            <select id="edit-status" name="status" required>
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
-                            <div class="botoning">
-                                <button type="submit" class="sab" onClick="updateUSR(id of user)">Save</button>
-                                <button type="button" id="cancel-edit" class="nac">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
+                <div class="overlay hidden"></div>
 
             </div>
         </div>
@@ -339,4 +245,83 @@ if ($_SESSION['role'] !== 'Admin') {
     </body>
 </html>
 
-<script src="../../js/usercontrol.js"> </script>
+<script>
+    function filterUsers(role = "all") {
+  const searchQuery = document.getElementById("search-bar").value.toLowerCase();
+  const rows = document.querySelectorAll("tbody tr");
+
+  rows.forEach((row) => {
+    const name = `${row.children[1].textContent.toLowerCase()} ${row.children[2].textContent.toLowerCase()}`;
+    const email = row.children[3].textContent.toLowerCase();
+    const userRole = row.children[4].textContent.toLowerCase();
+
+    const matchesSearch =
+      name.includes(searchQuery) || email.includes(searchQuery);
+    const matchesRole = role === "all" || userRole === role.toLowerCase();
+
+    row.style.display = matchesSearch && matchesRole ? "" : "none";
+  });
+}
+
+document.querySelectorAll(".filter-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    const role = button.getAttribute("data-role");
+    filterUsers(role);
+
+    // Update button styles for active state
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.classList.replace("btn-primary", "btn-secondary");
+    });
+    button.classList.replace("btn-secondary", "btn-primary");
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const recoverModal = document.getElementById("recover-modal");
+  const confirmRecover = document.getElementById("confirm-recover");
+  const cancelRecover = document.getElementById("cancel-delete");
+  let currentUserId = null;
+
+  // Show modal when "Recover" button is clicked
+  document.querySelectorAll(".recover-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+    document.querySelector(".overlay").classList.remove("hidden");
+      currentUserId = button.getAttribute("data-id");
+      recoverModal.classList.remove("hidden");
+    });
+  });
+
+  // Recover the user
+  confirmRecover.addEventListener("click", () => {
+    if (currentUserId) {
+      fetch("../../controls/admin/recover.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_id: currentUserId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert("User recovered successfully!");
+            location.reload(); // Reload to update the table
+          } else {
+            alert("Failed to recover user: " + data.message);
+          }
+        })
+        .catch((err) => {
+          console.error("Error:", err);
+          alert("An error occurred while recovering the user.");
+        });
+    }
+  });
+
+  cancelRecover.addEventListener("click", () => {
+    document.querySelector(".overlay").classList.add("hidden");
+    recoverModal.classList.add("hidden");
+    currentUserId = null;
+  });
+});
+
+</script>

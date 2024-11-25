@@ -33,7 +33,7 @@ if ($_SESSION['role'] !== 'Teacher') {
                 </div>
 
                 <nav class="nav-links">
-                    <a href="../""> 
+                    <a href="../"> 
                         <svg
                             style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
@@ -73,32 +73,13 @@ if ($_SESSION['role'] !== 'Teacher') {
 
                         Review Studies
                     </a>
-                    <a href="/dara/student/document-status">
-                        <svg
-                            style="margin-right: 10px;"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-eye"
-                            >
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                            <circle cx="12" cy="12" r="3" />
-                        </svg>
-
-                        View Study Status
-                    </a>
 
                     <div class="asd2" style=" width: 100%; margin-top: 10px; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
                     <a href="../../" class="unq">Search Studies</a>
+                    <a href="../edit" class="unq">Edit Account</a>
 
                     <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>

@@ -2,7 +2,7 @@
 include '../../db/db.php';
 session_start();
 
-if ($_SESSION['role'] !== 'Student') {
+if ($_SESSION['role'] !== 'Student') { 
     header('Location: ../../view/login.php');
     exit();
 }
@@ -24,6 +24,7 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="../../css/mainpage.scss">
     <link rel="stylesheet" href="../../css/std.scss">
     <link rel="stylesheet" href="../../css/std_status.scss"> 
+    <link rel="stylesheet" href="../../css/svg.scss">
 </head>
 <body>
     <main>
@@ -42,7 +43,6 @@ $result = $stmt->get_result();
                 <nav class="nav-links">
                     <a href="../"> 
                         <svg
-                            style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
@@ -62,7 +62,6 @@ $result = $stmt->get_result();
                     </a>
                     <a href="/dara/student/document-submission">
                         <svg
-                            style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
@@ -82,9 +81,8 @@ $result = $stmt->get_result();
                     
                         Submit Studies
                     </a>
-                    <a href="#" style="color: #04128e; font-weight: normal;">
+                    <a href="" style="color: #04128e; font-weight: normal;">
                         <svg
-                            style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
@@ -108,6 +106,7 @@ $result = $stmt->get_result();
                     </div>
 
                     <a href="../../" class="unq">Search Studies</a>
+                    <a href="../edit" class="unq">Edit Account</a>
 
                     <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
@@ -131,7 +130,7 @@ $result = $stmt->get_result();
                             <line x1="15" y1="12" x2="3" y2="12" />
                         </svg>
                         
-                        &nbsp; Logout
+                        Logout
                     </a>
                 </nav>
             </div>

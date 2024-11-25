@@ -202,7 +202,7 @@ $recent_users_online_data = $conn->query("
     <link rel="stylesheet" href="../css/mainpage.scss">
     <link rel="stylesheet" href="../css/std_control.scss">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+</head> 
 <body>
     <main>
         <header> 
@@ -245,7 +245,7 @@ $recent_users_online_data = $conn->query("
                         </svg>
                         Manage Users
                     </a>
-                    <a href="/dara/student/document-status">
+                    <a href="messages">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -267,18 +267,36 @@ $recent_users_online_data = $conn->query("
                         Inbox
                     </a>
 
-                    <div class="divider"></div>
+                    <div class="asd2" style=" width: 100%; margin-top: 10px; display: flex; justify-content: center;">
+                        <div class="asd3" style="border-bottom: 1px solid rgb(0, 0, 0, 0.2); width: 150px;"></div>
+                    </div>
 
                     <a href="../" class="unq">Search Studies</a>
-                    <a href="../../" class="unq">Edit Account</a>
+                    <a href="edit" class="unq">Edit Account</a>
+                    <a href="recovery" class="unq">Recovery</a>
                     
-                    <div class="divider"></div>
+                    <div class="asd2" style=" width: 100%; 10px; display: flex; justify-content: center;">
+                        <div class="asd3" style="border-bottom: 1px solid rgb(0, 0, 0, 0.2); width: 150px;"></div>
+                    </div>
+
                     <a href="../view/logout.php" class="logout-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 1-2 2h-4" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-log-in"
+                            >
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
                             <polyline points="10 17 15 12 10 7" />
                             <line x1="15" y1="12" x2="3" y2="12" />
                         </svg>
+
                         Logout
                     </a>
                 </nav>

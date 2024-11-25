@@ -37,6 +37,7 @@ $data = $result->fetch_assoc();
     <link rel="stylesheet" href="../css/std.scss">
     <link rel="stylesheet" href="../css/mainpage.scss">
     <link rel="stylesheet" href="../css/std_control.scss">
+    <link rel="stylesheet" href="../css/svg.scss">
 </head>
 <body>
     <main>
@@ -56,7 +57,6 @@ $data = $result->fetch_assoc();
                 <nav class="nav-links">
                     <a href="#" style="color: #04128e; font-weight: normal;"> 
                         <svg
-                            style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
@@ -76,7 +76,6 @@ $data = $result->fetch_assoc();
                     </a>
                     <a href="/dara/student/document-submission">
                         <svg
-                            style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
@@ -98,7 +97,6 @@ $data = $result->fetch_assoc();
                     </a>
                     <a href="/dara/student/document-status">
                         <svg
-                            style="margin-right: 10px;"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
@@ -120,8 +118,9 @@ $data = $result->fetch_assoc();
                     <div class="asd2" style=" width: 100%; margin-top: 10px; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
-
+                    
                     <a href="../" class="unq">Search Studies</a>
+                    <a href="edit" class="unq">Edit Account</a>
 
                     <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
@@ -145,7 +144,7 @@ $data = $result->fetch_assoc();
                             <line x1="15" y1="12" x2="3" y2="12" />
                         </svg>
                         
-                        &nbsp; Logout
+                        Logout
                     </a>
                 </nav>
             </div>
