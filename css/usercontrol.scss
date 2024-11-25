@@ -338,3 +338,24 @@ table th {
     margin-bottom: 15px;
   }
 }
+
+.filter-group {
+  display: flex;
+  width: 100%;
+}
+
+@media (max-width: 1030px) {
+  .filter-group {
+    display: block;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    margin: 0;
+  }
+
+  .filter-btn {
+    margin-right: 9px;
+    margin-top: 10px;
+  }
+}

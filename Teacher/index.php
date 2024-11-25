@@ -128,7 +128,7 @@ $data = $result->fetch_assoc();
                 </nav>
             </div>
  
-            <div class="right">
+            <div class="right" style="height: 100%; overflow: auto;">
 
                 <?php include "../controls/teacher/tchr_dashboard.php" ?>
 

@@ -205,7 +205,7 @@ if (!isLoggedIn() || $_SESSION['role'] !== 'Admin') {
 
                                                     <div class="botoning">
                                                         <button type="submit" class="sab">Update Account</button>
-                                                        <button type="button" class="nac" id="closeModal">Cancel</button>
+                                                        <button type="button" class="nac" onClick="hawa()">Cancel</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -233,3 +233,9 @@ if (!isLoggedIn() || $_SESSION['role'] !== 'Admin') {
     </main>
 </body>
 </html>
+
+<script>
+    function hawa() {
+       window.location.href = "";
+    }
+</script>

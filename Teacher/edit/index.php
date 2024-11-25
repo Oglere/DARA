@@ -214,8 +214,4 @@ if (!isLoggedIn() || $_SESSION['role'] !== 'Teacher') {
 </body>
 </html>
 
-<script> 
-    function hawa() {
-       window.location.href = "";
-    }
-</script>
+<script src="../../js/hawa.js"></script>

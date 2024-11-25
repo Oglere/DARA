@@ -177,12 +177,14 @@ if ($_SESSION['role'] !== 'Admin') {
 
                     <div id="user-list">
                         <div class="actions">
-                            <div class="filter-group">
+                            <div class="filter-group"">
                                 <input type="text" id="search-bar" placeholder="Search users by name or email..." oninput="filterUsers()">
-                                <button class="btn-primary filter-btn" data-role="all">All</button>
-                                <button class="btn-secondary filter-btn" data-role="Admin">Admins</button>
-                                <button class="btn-secondary filter-btn" data-role="Teacher">Teachers</button>
-                                <button class="btn-secondary filter-btn" data-role="Student">Students</button>
+                                <div class="aridiri">
+                                    <button class="btn-primary filter-btn" data-role="all">All</button>
+                                    <button class="btn-secondary filter-btn" data-role="Admin">Admins</button>
+                                    <button class="btn-secondary filter-btn" data-role="Teacher">Teachers</button>
+                                    <button class="btn-secondary filter-btn" data-role="Student">Students</button>
+                                </div>
                             </div>
                             <button id="add-user-btn" class="adda">
                                 <svg
