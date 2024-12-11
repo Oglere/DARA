@@ -2,9 +2,8 @@
 if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
     echo "<script> window.location.assign('../../') </script>";
 }
-?>
 
-<?php if (isset($result) && $result->num_rows > 0): ?>
+if (isset($result) && $result->num_rows > 0): ?>
     <ul>
         <?php while ($row = $result->fetch_assoc()): ?>
             <div class="cell">
@@ -13,25 +12,20 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
                         <?= htmlspecialchars($row['title']) ?>
                     </a>
                 </li>
-                <?php
-                $authorsArray = json_decode($row['authors'], true);
-                $authorsList = is_array($authorsArray) ? implode(', ', $authorsArray) : '';
-
-                $keywordArray = json_decode($row['keywords'], true);
-                $keywords = is_array($keywordArray) ? implode(', ', $keywordArray) : '';
-
-                $publicationDate = htmlspecialchars($row['publication_year']);
-                $date = new DateTime($publicationDate);
-                $year = $date->format('Y');
                 
-                $studentLastName = htmlspecialchars($row['last_name']);
+                <?php
+                $authorsList = htmlspecialchars($row['authors']) ?: 'Unknown Author';
+                $keywords = htmlspecialchars($row['keywords']) ?: 'No keywords available';
+                $year = htmlspecialchars($row['publication_year']) ?: 'Unknown Year';
+                $studyType = htmlspecialchars($row['study_type']);
                 ?>
-                <p>Authors: <?= $studentLastName ?>, <?= htmlspecialchars($authorsList) ?> (<?= $year ?>)</p>
-                <p>Keywords: <?= htmlspecialchars($keywords) ?></p>
+                
+                <p>Authors: <?= htmlspecialchars($row['last_name']) ?>, <?= $authorsList ?> (<?= $year ?>)</p>
+                <p>Keywords: <?= $keywords ?></p>
+                <p>Study Type: <?= $studyType ?></p>
             </div>
         <?php endwhile; ?>
     </ul>
 <?php else: ?>
     <p style="margin-left: 35px;">No results found.</p>
 <?php endif; ?>
-

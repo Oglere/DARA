@@ -135,32 +135,55 @@ html {
 
           .tag {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
           }
 
           .tagform {
             height: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
 
             .lefttag {
+              margin-top: 15px;
               width: 100%;
               height: calc(100% - 40px);
               display: flex;
               flex-direction: column;
+              align-items: center;
 
               .date {
                 margin-left: 10px;
               }
+            }
 
-              .checkboxes {
-                height: 80%;
+            .righttag {
+              margin-top: 20px;
+              display: flex;
+              flex-wrap: wrap;
+              margin-bottom: 20px;
+              gap: 10px;
+              justify-content: center;
+              flex-direction: row;
+
+              .chkbx {
+                height: 45px;
+                width: calc(48% - 10px);
+                margin-bottom: 10px;
                 display: flex;
-                flex-direction: column;
+                align-items: center;
+                cursor: pointer;
+                border: #8e0404 1px solid;
+                border-radius: 5px;
+                padding-left: 10px;
 
-                .chkbx {
-                  margin-bottom: 10px;
+                input[type="checkbox"] {
+                  margin-right: 10px;
+                  cursor: pointer;
+                }
+
+                label {
+                  color: #8e0404;
+                  cursor: pointer;
                 }
               }
             }

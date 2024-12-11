@@ -1,16 +1,39 @@
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  class="feather feather-log-in"
->
-  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 1-2 2h-4" />
-  <polyline points="10 17 15 12 10 7" />
-  <line x1="15" y1="12" x2="3" y2="12" />
-</svg>
+TOPOLOGY CONFUGURATION SWITCH 1 enable conf t vlan 10 vlan 20 int fa0/2
+switchport mode access switchport access vlan 10 no shutdown int range fa0/3-4
+switchport mode access switchport access vlan 20 no shutdown int fa0/1
+switchport mode trunk no shutdown do write CORESWITCH 1 enable conf t vlan 10
+vlan 20 int vlan 10 ip address 172.16.0.1 255.255.255.128 int vlan 20 ip address
+172.16.0.129 255.255.255.128 int fa0/2 sw trunk encapsulation dot1q sw mode
+trunk int fa 0/1 switchport trunk encapsulation dot1q switchport mode trunk ip
+dhcp pool vlan10 network 172.16.0.0 255.255.255.128 default-router 172.16.0.1 ip
+dhcp pool vlan20 network 172.16.0.128 255.255.255.128 default-router
+172.16.0.129 do write ROUTER 1 enable conf t int fa1/0 no shutdown int fa1/0.10
+encapsulation dot1q 10 ip address 172.16.0.2 255.255.255.128 int fa1/0.20
+encapsulation dot1q 20 ip address 172.16.0.130 255.255.255.128 int fa0/0 ip
+address 172.16.1.1 255.255.255.128 no shutdown do write SWITCH 2: enable conf t
+vlan 30 vlan 40 int range fa0/2-3 switchport mode access switchport access vlan
+30 int fa0/4 switchport mode access switchport access vlan 40 int fa0/1
+switchport mode trunk do write CORESWITCH 2: enable conf t vlan 30 vlan 40 int
+vlan 30 ip address 172.16.2.1 255.255.255.128 int vlan 40 ip address
+172.16.2.129 255.255.255.128 ip dhcp pool vlan30 network 172.16.2.0
+255.255.255.128 default-router 172.16.2.1 ip dhcp pool vlan40 network
+172.16.2.128 255.255.255.128 default-router 172.16.2.129 int fa0/1 switchport
+trunk encapsulation dot1q switchport mode trunk int fa0/2 switchport trunk
+encapsulation dot1q switchport mode trunk do write ROUTER 2 enable conf t int
+fa1/0 no shutdown int fa1/0.30 encapsulation dot1q 30 ip address 172.16.2.2
+255.255.255.128 int fa1/0.40 encapsulation dot1q 40 ip address 172.16.2.130
+255.255.255.128 int fa0/0 ip address 172.16.1.2 255.255.255.128 do write -- IP
+ROUTING -- CORESWITCH 1 ip route 172.16.0.0 255.255.255.128 172.16.0.2 ip route
+172.16.0.128 255.255.255.128 172.16.0.2 ip route 172.16.1.0 255.255.255.128
+172.16.0.2 ip route 172.16.2.0 255.255.255.128 172.16.0.2 ip route 172.16.2.128
+255.255.255.128 172.16.0.2 ip routing do write CORESWITCH 2 ip route 172.16.2.0
+255.255.255.128 172.16.2.2 ip route 172.16.2.128 255.255.255.128 172.16.2.2 ip
+route 172.16.1.0 255.255.255.128 172.16.2.2 ip route 172.16.0.0 255.255.255.128
+172.16.2.2 ip route 172.16.0.128 255.255.255.128 172.16.2.2 ip routing do write
+ROUTER 1 ip route 172.16.1.0 255.255.255.128 172.16.1.2 ip route 172.16.0.0
+255.255.255.128 172.16.1.2 ip route 172.16.0.128 255.255.255.128 172.16.1.2 ip
+route 172.16.2.0 255.255.255.128 172.16.1.2 ip route 172.16.2.128
+255.255.255.128 172.16.1.2 do write ROUTER 2 ip route 172.16.1.0 255.255.255.128
+172.16.1.1 ip route 172.16.2.0 255.255.255.128 172.16.1.1 ip route 172.16.2.128
+255.255.255.128 172.16.1.1 ip route 172.16.0.0 255.255.255.128 172.16.1.1 ip
+route 172.16.0.128 255.255.255.128 172.16.1.1 do write
