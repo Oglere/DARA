@@ -19,6 +19,7 @@ include '../db/db.php';
                 <p><strong>Abstract:</strong> <?= $abstract ?></p>
                 <p><strong>Publication Date:</strong> <?= $publication_date ?></p>
                 <p><strong>Keywords:</strong> 
+                <p><strong>Study Type:</strong> <?= htmlspecialchars($studytype) ?></p> <!-- Fixed variable name -->
                     <?php 
                     if (is_array($keywords) && !empty($keywords)) {
                         echo implode(", ", $keywords) . ".";

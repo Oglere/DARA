@@ -81,3 +81,36 @@ header {
     }
   }
 }
+
+.righttag {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  width: 175px;
+  flex-direction: row;
+  justify-content: center;
+
+  .chkbx {
+    height: 30px;
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: #8e0404 1px solid;
+    border-radius: 5px;
+    padding-left: 10px;
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+      cursor: pointer;
+      display: none;
+    }
+
+    label {
+      color: #8e0404;
+      cursor: pointer;
+    }
+  }
+}

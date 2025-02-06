@@ -146,7 +146,7 @@ if ($_SESSION['role'] !== 'Admin') {
 $total_documents = $conn->query("
     SELECT COUNT(*) 
     AS total FROM document_repository 
-    WHERE status = 'Published'
+    WHERE status = 'Approved'
 ")->fetch_assoc()['total'];
 
 
@@ -197,13 +197,13 @@ $recent_users_online_data = $conn->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DARA - Admin Dashboard</title>
+    <title>Admin - Dashboard</title>
     <link rel="stylesheet" href="../css/std.scss">
     <link rel="stylesheet" href="../css/mainpage.scss">
     <link rel="stylesheet" href="../css/std_control.scss">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head> 
-<body>
+<body style="overflow: hidden;">
     <main>
         <header> 
             <div class="ahh">
@@ -245,6 +245,29 @@ $recent_users_online_data = $conn->query("
                         </svg>
                         Manage Users
                     </a>
+                    
+                    <?php
+                    // Connect to the database
+                    $conn = new mysqli("localhost", "root", "", "dara");
+
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
+                    // Query to count unread notifications (where is_checked = 0)
+                    $sql = "SELECT COUNT(*) AS unread_count FROM notification_logs WHERE is_checked = 0";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        $unreadCount = $row['unread_count'];
+                    } else {
+                        $unreadCount = 0;
+                    }
+
+                    $conn->close();
+                    ?>
+
                     <a href="messages">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -263,9 +286,13 @@ $recent_users_online_data = $conn->query("
                             />
                             <polyline points="22,6 12,13 2,6" />
                         </svg>
-                        
+
                         Inbox
+                        <?php if ($unreadCount > 0): ?>
+                            <strong style="color: #8e0404;">&nbsp&nbsp&nbsp<?= $unreadCount ?></strong>
+                        <?php endif; ?>
                     </a>
+
 
                     <div class="asd2" style=" width: 100%; margin-top: 10px; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid rgb(0, 0, 0, 0.2); width: 150px;"></div>
@@ -302,7 +329,7 @@ $recent_users_online_data = $conn->query("
                 </nav>
             </div>
 
-            <div class="right" style=" overflow: auto;">
+            <div class="right" style=" overflow: auto; height: calc(100% - 100px)">
                 <div class="chart-container">
                     <h2>Study Status Overview</h2>
                     <canvas id="studyStatusChart"></canvas>

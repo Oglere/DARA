@@ -1,9 +1,4 @@
-<?php
-if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
-    echo "<script> window.location.assign('../../') </script>";
-}
-
-if (isset($result) && $result->num_rows > 0): ?>
+<?php if (isset($result) && $result->num_rows > 0): ?>
     <ul>
         <?php while ($row = $result->fetch_assoc()): ?>
             <div class="cell">
@@ -12,17 +7,25 @@ if (isset($result) && $result->num_rows > 0): ?>
                         <?= htmlspecialchars($row['title']) ?>
                     </a>
                 </li>
-                
                 <?php
-                $authorsList = htmlspecialchars($row['authors']) ?: 'Unknown Author';
-                $keywords = htmlspecialchars($row['keywords']) ?: 'No keywords available';
-                $year = htmlspecialchars($row['publication_year']) ?: 'Unknown Year';
-                $studyType = htmlspecialchars($row['study_type']);
-                ?>
+                $authorsArray = json_decode($row['authors'], true);
+                $authorsList = is_array($authorsArray) ? implode(', ', $authorsArray) : '';
+
+                $keywordArray = json_decode($row['keywords'], true);
+                $keywords = is_array($keywordArray) ? implode(', ', $keywordArray) : '';
+
+                $studytypeArray = json_decode($row['study_type'], true);
+                $studytype = is_array($studytypeArray) ? implode(', ', $studytypeArray) : ''; // Fixed typo
+
+                $publicationDate = htmlspecialchars($row['publication_year']);
+                $date = new DateTime($publicationDate);
+                $year = $date->format('Y');
                 
-                <p>Authors: <?= htmlspecialchars($row['last_name']) ?>, <?= $authorsList ?> (<?= $year ?>)</p>
-                <p>Keywords: <?= $keywords ?></p>
-                <p>Study Type: <?= $studyType ?></p>
+                $studentLastName = htmlspecialchars($row['last_name']);
+                ?>
+                <p>Authors: <?= $studentLastName ?>, <?= htmlspecialchars($authorsList) ?> (<?= $year ?>)</p>
+                <p>Keywords: <?= htmlspecialchars($keywords) ?></p>
+                <p>Study Type: <?= htmlspecialchars($studytype) ?></p> <!-- Fixed variable name -->
             </div>
         <?php endwhile; ?>
     </ul>

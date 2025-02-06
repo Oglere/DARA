@@ -11,7 +11,8 @@ if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 
 $document_id = intval($_GET['id']);
 
-$sql = "SELECT title, metadata, file FROM Document_Repository WHERE document_id = ?";
+// Added `study_type` to the SELECT statement
+$sql = "SELECT title, metadata, file, study_type FROM Document_Repository WHERE document_id = ?";
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
     die('Prepare failed: ' . htmlspecialchars($conn->error));
@@ -29,8 +30,8 @@ $row = $result->fetch_assoc();
 $pdf_data = $row['file'];
 $title = htmlspecialchars($row['title']);
 
-$metadata = json_decode($row['metadata'], true);
-
+// Safely decode JSON metadata
+$metadata = !empty($row['metadata']) ? json_decode($row['metadata'], true) : [];
 if (json_last_error() !== JSON_ERROR_NONE) {
     die('Error decoding JSON metadata: ' . json_last_error_msg());
 }
@@ -38,6 +39,14 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 $abstract = htmlspecialchars($metadata['abstract'] ?? '');
 $publication_date = htmlspecialchars($metadata['publication_date'] ?? '');
 $keywords = json_decode($metadata['keywords'] ?? '[]', true);
+
+// Safely handle the `study_type` field
+$studytypeArray = !empty($row['study_type']) ? json_decode($row['study_type'], true) : [];
+if (json_last_error() !== JSON_ERROR_NONE) {
+    // If JSON fails, assume it's a plain text string and split by comma
+    $studytypeArray = explode(',', $row['study_type']);
+}
+$studytype = is_array($studytypeArray) ? implode(', ', $studytypeArray) : htmlspecialchars($row['study_type'] ?? '');
 ?>
 
 <html lang="en">
@@ -52,7 +61,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
 </head>
 <body>
     <main>
-        <header>
+    <header>
             <?php 
                 session_start();
                 if (isset($_SESSION['role']) && $_SESSION['role'] == "Teacher") {
@@ -103,7 +112,31 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
                         </div>
                     </a>
                     ';
-                } else {
+                } elseif (isset($_SESSION['role']) && $_SESSION['role'] == "Admin") {
+                    echo '
+                    <a href="../admin">
+                    <div class="loginbutton">
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-user"
+                        >
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                        </svg>
+
+                        <h4>&nbsp' . htmlspecialchars($_SESSION['first_name']) .' </h4>
+                    </div>
+                    </a>
+                    ';
+                } else { 
                     echo '
                     <a class="death" href="../view/login.php">
                         <div class="loginbutton">
@@ -124,7 +157,7 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
                                 <line x1="15" y1="12" x2="3" y2="12" />
                             </svg>
                             <h4> &nbsp Login</h4>
-                        </div>
+                        </div> 
                     </a>';
                 }
                 ?>
@@ -144,17 +177,13 @@ $keywords = json_decode($metadata['keywords'] ?? '[]', true);
                 <div class="left" style="border: none;"></div>
  
             <div class="right" style="overflow: auto;">
-
                 <?php include "pdf.php" ?>
-
             </div>
         </div>
 
         <footer>
-            
         </footer>
     </main>
 </body>
 </html>
 <script src="js/index.js"></script>
-

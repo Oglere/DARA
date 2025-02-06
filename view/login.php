@@ -70,11 +70,12 @@
                 </div>
                 <div class="ubos">
                     <button type="submit">L O G I N</button>
+                    <?php if (isset($error)): ?> 
+                        <div style="color: red; margin-top: 10px;" class="error"><?= $error ?></div>
+                    <?php endif; ?>
+                    <a href="recovery.php">Forgot Password?</a>
                 </div>
             </form>
-            <?php if (isset($error)): ?> 
-                <div style="color: red; margin-top: 10px;" class="error"><?= $error ?></div>
-            <?php endif; ?>
         </div>
         <footer>
         </footer>

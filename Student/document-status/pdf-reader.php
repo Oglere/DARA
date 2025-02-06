@@ -173,7 +173,7 @@ $keywords = is_array($metadata['keywords']) ? $metadata['keywords'] : [];
                         <div class="asd3" style="border-bottom: 1px solid grey; width: 150px;"></div>
                     </div>
 
-                    <a href="../" class="unq">Search Studies</a>
+                    <a href="../../" class="unq">Search Studies</a>
                     <a href="../edit" class="unq">Edit Account</a>
 
                     <div class="asd2" style=" width: 100%; display: flex; justify-content: center;">

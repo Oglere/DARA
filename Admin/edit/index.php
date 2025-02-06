@@ -21,7 +21,7 @@ if (!isLoggedIn() || $_SESSION['role'] !== 'Admin') {
     <link rel="stylesheet" href="../../css/usercontrol.scss">
     <link rel="stylesheet" href="../../css/atayaanioy.scss">
 </head>
-<body>
+<body style="overflow: hidden;">
     <main>
         <header>
             <div class="ahh">
@@ -75,27 +75,43 @@ if (!isLoggedIn() || $_SESSION['role'] !== 'Admin') {
 
                         Manage Users
                     </a>
-                    <a href="../messages">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-mail"
-                                >
-                                <path
-                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                                />
-                                <polyline points="22,6 12,13 2,6" />
-                            </svg>
+                    
+                    <?php
+                        $sql1 = "SELECT COUNT(*) AS unread_count FROM notification_logs WHERE is_checked = 0";
+                        $result = $conn->query($sql1);
 
-                            Inbox
-                        </a>
+                        if ($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            $unreadCount = $row['unread_count'];
+                        } else {
+                            $unreadCount = 0;
+                        }
+                    ?>
+
+                    <a href="../messages">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-mail"
+                            >
+                            <path
+                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                            />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+
+                        Inbox
+                        <?php if ($unreadCount > 0): ?>
+                            <strong style="color: #8e0404;">&nbsp&nbsp&nbsp<?= $unreadCount ?></strong>
+                        <?php endif; ?>
+                    </a>
 
                     <div class="asd2" style=" width: 100%; margin-top: 10px; display: flex; justify-content: center;">
                         <div class="asd3" style="border-bottom: 1px solid rgb(0, 0, 0, 0.2); width: 150px;"></div>

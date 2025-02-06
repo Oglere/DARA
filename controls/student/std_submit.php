@@ -16,7 +16,7 @@
 
     <div class="container">
         <div class="card"> 
-            <h3>Upload File</h3>
+            <h3>Upload File</h3> 
             <div class="drop_box">
                 <div class="header">
                     <h4>Select File here</h4>
@@ -60,35 +60,71 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const chooseFileBtn = document.getElementById("chooseFileBtn");
-    const inputFile = document.getElementById("fileID");
-    const fileNameDisplay = document.getElementById("fileNameDisplay");
-    const submitButton = document.getElementById("submitButton");
+        const chooseFileBtn = document.getElementById("chooseFileBtn");
+        const inputFile = document.getElementById("fileID");
+        const fileNameDisplay = document.getElementById("fileNameDisplay");
+        const submitButton = document.getElementById("submitButton");
+        const checkboxes = document.querySelectorAll('.chkbx input'); // Get all checkbox inputs
 
-    chooseFileBtn.addEventListener("click", () => {
-        inputFile.click(); 
-    });
+        chooseFileBtn.addEventListener("click", () => {
+            inputFile.click();
+        });
 
-    inputFile.addEventListener("change", function () {
-        const file = this.files[0];
-        if (file && file.type === "application/pdf") {
-            fileNameDisplay.textContent = `Selected file: ${file.name}`;
-            submitButton.disabled = false;
-        } else {
-            alert("Error: Only PDF files are allowed.");
-            fileNameDisplay.textContent = "No valid file selected";
-            this.value = "";
-            submitButton.disabled = true;
-        }
-    });
+        inputFile.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file && file.type === "application/pdf") {
+                fileNameDisplay.textContent = `Selected file: ${file.name}`;
+                submitButton.disabled = false;
+            } else {
+                alert("Error: Only PDF files are allowed.");
+                fileNameDisplay.textContent = "No valid file selected";
+                this.value = "";
+                submitButton.disabled = true;
+            }
+        });
 
-    document.getElementById("documentForm").addEventListener("submit", function (event) {
-        if (!inputFile.files[0] || inputFile.files[0].type !== "application/pdf") {
-            event.preventDefault();
-            alert("Please upload a valid PDF file.");
-        }
+        // Checkbox click handling
+        checkboxes.forEach(chkbx => {
+            chkbx.addEventListener('click', (e) => {
+                // Prevent double triggering when clicking on the input itself
+                if (e.target.tagName !== 'INPUT') {
+                    const checkbox = chkbx.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                }
+                
+                // Change background color of the chkbx
+                const checkbox = chkbx.querySelector('input[type="checkbox"]');
+                chkbx.style.backgroundColor = checkbox.checked ? '#04128e' : ''; // Red background if checked
+                
+                // Change the text color inside the chkbx to white
+                const label = chkbx.querySelector('label');
+                label.style.color = checkbox.checked ? 'white' : ''; // White text when checked
+            });
+        });
+
+        // Form submission handler
+        document.getElementById("documentForm").addEventListener("submit", function (event) {
+            // Check if a PDF file is uploaded
+            if (!inputFile.files[0] || inputFile.files[0].type !== "application/pdf") {
+                event.preventDefault();
+                alert("Please upload a valid PDF file.");
+                return; // Prevent form submission
+            }
+
+            // Check if at least one checkbox is selected
+            let checkboxSelected = false;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkboxSelected = true;
+                }
+            });
+
+            if (!checkboxSelected) {
+                event.preventDefault();
+                alert("Please select at least one document type.");
+            }
+        });
     });
-});
 
 const checkboxes = document.querySelectorAll('.chkbx');
 

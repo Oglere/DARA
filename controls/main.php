@@ -7,9 +7,9 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 <div class="contents">
     <p>D A R A</p>
     <h4>Digital Academic Repository and Archive</h4>
-    <form action="view/results.php" method="get">
+    <form id="searchForm" action="view/results.php" method="get">
         <div class="search">
-            <input name="search" type="text" placeholder="Search...">
+            <input id="search" name="search" type="text" placeholder="Search...">
             <button type="submit">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -51,19 +51,17 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
                 
                 <div class="tagform">
                     <div class="lefttag">
-
                         <div class="date">
                             <input type="number" id="from-year" name="from-year" min="1900" max="2100" step="1" placeholder="From Year">
                             <label for="to-year">-</label>
                             <input type="number" id="to-year" name="to-year" min="1900" max="2100" step="1" placeholder="To Year">
                         </div>
-                        
                     </div>
                     <div class="midtag"></div>
                     <div class="righttag">
                         <div class="chkbx">
                             <input class="w3-check" type="checkbox" name="document_types[]" value="Case Study">
-                            <label class="tada">Case Study</label>
+                            <label class="tada">Case Study</label> 
                         </div>
                         <div class="chkbx">
                             <input class="w3-check" type="checkbox" name="document_types[]" value="Thesis">
@@ -88,25 +86,30 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
     </form>
 </div>
 
-<script> 
+<script>
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    const searchInput = document.getElementById('search').value.trim();
+    const fromYear = document.getElementById('from-year').value.trim();
+    const toYear = document.getElementById('to-year').value.trim();
+    const checkboxes = document.querySelectorAll('input[name="document_types[]"]:checked');
+
+    if (!searchInput && !fromYear && !toYear && checkboxes.length === 0) {
+        alert('Please fill at least one field to search.');
+        e.preventDefault(); // Prevent form submission
+    }
+});
 
 const checkboxes = document.querySelectorAll('.chkbx');
-
 checkboxes.forEach(chkbx => {
     chkbx.addEventListener('click', (e) => {
-        // Prevent double triggering when clicking on the input itself
         if (e.target.tagName !== 'INPUT') {
             const checkbox = chkbx.querySelector('input[type="checkbox"]');
             checkbox.checked = !checkbox.checked;
         }
-        
-        // Change background color of the chkbx
         const checkbox = chkbx.querySelector('input[type="checkbox"]');
-        chkbx.style.backgroundColor = checkbox.checked ? '#8e0404' : ''; // Red background if checked
-        
-        // Change the text color inside the chkbx to white
-        const label = chkbx.querySelector('label'); // Get the label inside this specific chkbx
-        label.style.color = checkbox.checked ? 'white' : ''; // White text when checked
+        chkbx.style.backgroundColor = checkbox.checked ? '#8e0404' : ''; 
+        const label = chkbx.querySelector('label'); 
+        label.style.color = checkbox.checked ? 'white' : ''; 
     });
 });
 </script>

@@ -1,12 +1,14 @@
 
 <?php
 include '../../db/db.php';
-session_start();
+session_start(); 
 
-if ($_SESSION && $_SESSION['role'] !== 'Admin') {
+if (!$_SESSION || ($_SESSION && $_SESSION['role'] !== 'Admin')) {
     header('Location: ../../view/login.php');
     exit();
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ if ($_SESSION && $_SESSION['role'] !== 'Admin') {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DARA - Admin Dashboard</title>
+        <title>Admin - Account Recovery</title>
         <link rel="stylesheet" href="../../css/std.scss">
         <link rel="stylesheet" href="../../css/mainpage.scss">
         <link rel="stylesheet" href="../../css/std_control.scss">
@@ -76,6 +78,19 @@ if ($_SESSION && $_SESSION['role'] !== 'Admin') {
 
                             Manage Users
                         </a>
+                    
+                        <?php
+                            $sql1 = "SELECT COUNT(*) AS unread_count FROM notification_logs WHERE is_checked = 0";
+                            $result = $conn->query($sql1);
+
+                            if ($result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                $unreadCount = $row['unread_count'];
+                            } else {
+                                $unreadCount = 0;
+                            }
+                        ?>
+
                         <a href="../messages">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -96,6 +111,9 @@ if ($_SESSION && $_SESSION['role'] !== 'Admin') {
                             </svg>
 
                             Inbox
+                            <?php if ($unreadCount > 0): ?>
+                                <strong style="color: #8e0404;">&nbsp&nbsp&nbsp<?= $unreadCount ?></strong>
+                            <?php endif; ?>
                         </a>
 
                         <div class="asd2" style=" width: 100%; margin-top: 10px; display: flex; justify-content: center;">

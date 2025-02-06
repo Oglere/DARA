@@ -32,7 +32,7 @@
             </a>
         </header>
         
-        <?php 
+        <?php  
             include "../controls/main.php"
         ?>
 

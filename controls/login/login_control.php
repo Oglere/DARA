@@ -47,8 +47,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Invalid login credentials.";
     }
 }
-
-if (isset($error)) {
-    echo "<script>alert('$error');</script>";
-}
 ?>

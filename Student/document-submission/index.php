@@ -210,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
 
-                <?php
+                <?php 
 
                     include "../../controls/student/std_submit.php";
                 ?>
