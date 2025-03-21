@@ -56,6 +56,7 @@
         </div>
     </div>
     <button type="submit" id="submitButton" disabled>Submit</button>
+    <p>Error</p>
 </form>
 
 <script>
